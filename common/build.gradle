@@ -16,14 +16,25 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
-
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", BASE_URL)
+            minifyEnabled false
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+        }
+    }
+    flavorDimensions "environment"
+    productFlavors {
+        dev {
+            dimension "environment"
+            buildConfigField("String", "BASE_URL", BASE_URL)
+        }
+
+        prod {
+            dimension "environment"
             buildConfigField("String", "BASE_URL", BASE_URL)
         }
     }

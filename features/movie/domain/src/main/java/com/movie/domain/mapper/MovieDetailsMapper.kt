@@ -5,8 +5,9 @@ import com.movie.common.network.DataException
 import com.movie.common.network.Result
 import com.movie.data.model.MovieDetailModel
 import com.movie.domain.displaymodel.MovieDetailDisplayModel
+import javax.inject.Inject
 
-open class MovieDetailsMapper {
+open class MovieDetailsMapper @Inject constructor() {
     fun mapToDisplayModel(movieDetailModel: Result<MovieDetailModel>): Result<MovieDetailDisplayModel> {
         return when (movieDetailModel) {
             is Result.Success -> Result.Success(

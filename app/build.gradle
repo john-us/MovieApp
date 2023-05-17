@@ -20,9 +20,29 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            applicationIdSuffix ".debug"
             minifyEnabled false
+        }
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    flavorDimensions "environment"
+    productFlavors {
+        dev {
+            dimension "environment"
+            applicationId "com.movieapp.dev"
+            buildConfigField "String", "BASE_URL", '"https://api.themoviedb.org/3/"'
+        }
+
+        prod {
+            dimension "environment"
+            applicationId "com.movieapp"
+            buildConfigField "String", "BASE_URL", '"https://api.themoviedb.org/3/"'
         }
     }
     compileOptions {
