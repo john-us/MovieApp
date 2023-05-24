@@ -11,7 +11,7 @@ class MovieDetailsUseCase @Inject constructor(
     private val movieRepository: MovieRepository,
     private val movieDetailsMapper: MovieDetailsMapper
 ) {
-    suspend fun getMovieDetails(movieId: Long): Result<MovieDetailDisplayModel> {
+    suspend operator fun invoke(movieId: Long): Result<MovieDetailDisplayModel> {
         val movieDetailModel = movieRepository.getMovieDetails(movieId)
         return movieDetailsMapper.mapToDisplayModel(movieDetailModel)
     }

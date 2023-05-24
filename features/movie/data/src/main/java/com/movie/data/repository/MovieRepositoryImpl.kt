@@ -1,6 +1,6 @@
 package com.movie.data.repository
 
-import com.movie.common.constant.NetworkConstant
+import com.movie.common.constant.CommonConstant
 import com.movie.common.network.ApiException
 import com.movie.common.network.DataException
 import com.movie.common.network.NetworkException
@@ -25,7 +25,7 @@ class MovieRepositoryImpl @Inject constructor(
         } catch (e: IOException) {
             return Result.Error(NetworkException(e.message))
         }
-        return Result.Error(DataException(NetworkConstant.UnknownError))
+        return Result.Error(DataException(CommonConstant.UnknownError))
 
     }
 
@@ -41,7 +41,7 @@ class MovieRepositoryImpl @Inject constructor(
         } catch (e: IOException) {
             return Result.Error(NetworkException(e.message))
         }
-        return Result.Error(DataException(NetworkConstant.UnknownError))
+        return Result.Error(DataException(CommonConstant.UnknownError))
     }
 
 }

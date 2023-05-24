@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="app_in_bg">App in Background</string>
+    <string name="app_in_fg">App in Foreground</string>
 </resources>

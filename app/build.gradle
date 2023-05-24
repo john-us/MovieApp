@@ -4,17 +4,17 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
 }
-
+apply from: '../dependencies.gradle'
 android {
-    namespace 'com.movieapp'
-    compileSdk 33
+    namespace rootProject.ext.app_config.applicationId
+    compileSdk rootProject.ext.app_config.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.movieapp"
-        minSdk 24
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        applicationId rootProject.ext.app_config.applicationId
+        minSdk rootProject.ext.app_config.minSdkVersion
+        targetSdk rootProject.ext.app_config.targetSdkVersion
+        versionCode rootProject.ext.app_config.versionCode
+        versionName rootProject.ext.app_config.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -50,7 +50,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = rootProject.ext.app_config.jvmTarget
     }
     buildFeatures {
         viewBinding true
@@ -58,27 +58,21 @@ android {
 }
 
 dependencies {
+    testImplementation rootProject.ext.testDependencies.junit
+    androidTestImplementation rootProject.ext.testDependencies.junitAndroid
+    androidTestImplementation rootProject.ext.testDependencies.espresso
+    implementation rootProject.ext.dependencies.hilt
+    kapt rootProject.ext.dependencies.hiltCompiler
+    implementation rootProject.ext.dependencies.lifecycleExtension
 
-    implementation 'androidx.core:core-ktx:1.10.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.core:core-ktx:1.10.0'
+    //common module
     implementation project(path: ':common')
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-compiler:2.44"
-
     //presentation module
     implementation project(path: ':features:movie:presentation')
     //data module
     implementation project(path: ':features:movie:data')
     //domain module
     implementation project(path: ':features:movie:domain')
-    //New Android X dependency is this -
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 }
 // Allow references to generated code
 kapt {

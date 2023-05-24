@@ -6,18 +6,18 @@ import com.google.gson.annotations.SerializedName
 data class MovieDetailModel(
     val adult: Boolean? = null,
     @SerializedName("backdrop_path")
-    val backdropPath: String? = null,
+    val backdropPath: String,
     @SerializedName("belongs_to_collection")
     val belongsToCollection: BelongsToCollection? = null,
     val budget: Long? = null,
     val genres: List<Genre?>? = null,
     val homepage: String? = null,
-    val id: Int? = null,
+    val id: Int,
     val imdb_id: String? = null,
     @SerializedName("original_language")
     val originalLanguage: String? = null,
     @SerializedName("original_title")
-    val originalTitle: String? = null,
+    val originalTitle: String,
     val overview: String? = null,
     val popularity: Double? = null,
     @SerializedName("poster_path")
@@ -27,14 +27,14 @@ data class MovieDetailModel(
     @SerializedName("production_countries")
     val productionCountries: List<ProductionCountry?>? = null,
     @SerializedName("release_date")
-    val releaseDate: String? = null,
+    val releaseDate: String,
     val revenue: Long? = null,
     val runtime: Int? = null,
     @SerializedName("spoken_languages")
     val spokenLanguages: List<SpokenLanguage?>? = null,
-    val status: String? = null,
+    val status: String,
     val tagline: String? = null,
-    val title: String? = null,
+    val title: String,
     val video: Boolean? = null,
     @SerializedName("vote_average")
     val voteAverage: Double? = null,
@@ -44,22 +44,22 @@ data class MovieDetailModel(
     data class BelongsToCollection(
         @SerializedName("backdrop_path")
         val backdropPath: String?,
-        val id: Int?,
+        val id: Int,
         val name: String?,
         @SerializedName("poster_path")
         val posterPath: String?
     )
 
     data class Genre(
-        val id: Int?,
+        val id: Int,
         val name: String?
     )
 
     data class ProductionCompany(
-        val id: Int?,
+        val id: Int,
         @SerializedName("poster_path")
         val logoPath: String?,
-        val name: String?,
+        val name: String,
         @SerializedName("origin_country")
         val originCountry: String?
     )
@@ -71,7 +71,7 @@ data class MovieDetailModel(
 
     data class SpokenLanguage(
         @SerializedName("english_name")
-        val englishName: String?,
+        val englishName: String,
         val iso_639_1: String?,
         val name: String?
     )

@@ -1,87 +1,88 @@
 package com.movie.presentation
 
+import com.google.gson.Gson
+import com.movie.common.constant.CommonConstant
 import com.movie.common.network.NetworkException
 import com.movie.common.network.Result
 import com.movie.domain.displaymodel.MovieDetailDisplayModel
 import com.movie.domain.usecase.MovieDetailsUseCase
 import com.movie.presentation.viewmodel.MovieDetailViewModel
-import junit.framework.TestCase
+import io.mockk.coEvery
+import io.mockk.mockk
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.withContext
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.junit.MockitoJUnitRunner
+import java.nio.file.Files
+import java.nio.file.Paths
 
 @ExperimentalCoroutinesApi
-@ObsoleteCoroutinesApi
-@RunWith(MockitoJUnitRunner::class)
 class MovieDetailViewModelTest {
     private lateinit var movieDetailViewModel: MovieDetailViewModel
-    private val testDispatcher = TestCoroutineDispatcher()
+    private val testDispatcher = StandardTestDispatcher()
+    private val movieId: Long = 640146
+    private val delayTime: Long = 1000
 
-    @Mock
     private lateinit var movieDetailsUseCase: MovieDetailsUseCase
+
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
+        movieDetailsUseCase = mockk()
         movieDetailViewModel = MovieDetailViewModel(movieDetailsUseCase)
     }
+
 
     @After
     fun tearDown() {
         Dispatchers.resetMain()
-        testDispatcher.cleanupTestCoroutines()
+        testDispatcher.cancel()
     }
 
+
     @Test
-    fun `Movie Detail data success`() = runBlockingTest {
+    fun `Movie Detail data success`() = runTest {
+        val jsonFilePath = "src/test/resources/moviedetaildisplay.json"
+        val jsonString = String(withContext(Dispatchers.IO) {
+            Files.readAllBytes(Paths.get(jsonFilePath))
+        })
+
         val expectedData = Result.Success(
-            MovieDetailDisplayModel(
-                "/3CxUndGhUcZdt1Zggjdb2HkLLQX.jpg",
-                640146,
-                "Ant-Man and the Wasp: Quantumania",
-                "2023-02-15",
-                "",
-                "Ant-Man and the Wasp: Quantumania"
-            )
+            Gson().fromJson(jsonString, MovieDetailDisplayModel::class.java)
         )
-        Mockito.`when`(movieDetailsUseCase.getMovieDetails(640146)).thenReturn(expectedData)
+        coEvery { movieDetailsUseCase.invoke(movieId) } returns expectedData
 
-        // Call the method under test
-        movieDetailViewModel.loadMovieDetail(640146)
+        movieDetailViewModel.loadMovieDetail(movieId)
 
-        // Advance the coroutine to execute the code inside viewModelScope.launch
-        advanceTimeBy(1000)
+        advanceTimeBy(delayTime)
 
         // Assert that the data is updated correctly
-        TestCase.assertEquals(expectedData, movieDetailViewModel.movieDetail.value)
+        assertEquals(expectedData, movieDetailViewModel.movieDetail.value)
     }
 
+
     @Test
-    fun `Movie detail data error`() = runBlockingTest {
+    fun `Movie detail data error`() = runTest {
         val expectedData = Result.Error(
-            NetworkException("connection time out")
+            NetworkException(CommonConstant.UnknownError)
         )
-        Mockito.`when`(movieDetailsUseCase.getMovieDetails(640146)).thenReturn(expectedData)
+        coEvery { movieDetailsUseCase.invoke(movieId) } returns expectedData
 
-        // Call the method under test
-        movieDetailViewModel.loadMovieDetail(640146)
+        movieDetailViewModel.loadMovieDetail(movieId)
 
-        // Advance the coroutine to execute the code inside viewModelScope.launch
-        advanceTimeBy(1000)
+        advanceTimeBy(delayTime)
 
         // Assert that the data is updated correctly
-        TestCase.assertEquals(expectedData, movieDetailViewModel.movieDetail.value)
+        assertEquals(expectedData, movieDetailViewModel.movieDetail.value)
     }
 }

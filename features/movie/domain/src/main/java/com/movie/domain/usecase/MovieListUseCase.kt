@@ -10,7 +10,7 @@ class MovieListUseCase @Inject constructor(
     private val movieRepository: MovieRepository,
     private val movieListMapper: MovieListMapper
 ) {
-    suspend fun getMovieList(): Result<List<MovieListDisplayModel>> {
+    suspend operator fun invoke(): Result<List<MovieListDisplayModel>> {
         val movieListModel = movieRepository.getMovieList()
         return movieListMapper.mapToDisplayModel(movieListModel)
     }

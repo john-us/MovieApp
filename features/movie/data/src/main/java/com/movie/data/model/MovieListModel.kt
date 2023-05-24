@@ -11,7 +11,7 @@ data class MovieListModel(
     val totalResults: Int? = 0
 ) {
     data class Movie(
-        val id: Long?,
+        val id: Long,
         val title: String,
         @SerializedName("backdrop_path")
         val backdropPath: String,

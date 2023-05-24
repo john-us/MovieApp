@@ -21,7 +21,7 @@ class MovieDetailViewModel @Inject constructor(
     fun loadMovieDetail(movieId: Long) {
         viewModelScope.launch {
             _movieDetail.value = Result.Loading
-            val result = movieDetailsUseCase.getMovieDetails(movieId)
+            val result = movieDetailsUseCase.invoke(movieId)
             _movieDetail.value = result
         }
     }

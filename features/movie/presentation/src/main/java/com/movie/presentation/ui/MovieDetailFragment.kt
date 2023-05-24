@@ -12,7 +12,7 @@ import com.movie.common.network.Result
 import com.movie.common.util.loadImage
 import com.movie.domain.displaymodel.MovieDetailDisplayModel
 import com.movie.presentation.R
-import com.movie.presentation.databinding.FragmentMoviedetailBinding
+import com.movie.presentation.databinding.FragmentMovieDetailBinding
 import com.movie.presentation.viewmodel.MovieDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
-    private lateinit var binding: FragmentMoviedetailBinding
+    private lateinit var binding: FragmentMovieDetailBinding
     private var movieId: Long? = null
     private lateinit var movieDetailViewModel: MovieDetailViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +34,7 @@ class MovieDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMoviedetailBinding.inflate(inflater, container, false)
+        binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -42,7 +42,11 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         movieDetailViewModel = ViewModelProvider(this)[MovieDetailViewModel::class.java]
         initObservers()
-        movieId?.let { movieDetailViewModel.loadMovieDetail(it) }
+        movieId?.let { movieDetailViewModel.loadMovieDetail(it) } ?: Toast.makeText(
+            context,
+            getString(R.string.movie_id_not_found),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun initObservers() {
@@ -56,7 +60,11 @@ class MovieDetailFragment : Fragment() {
 
                     is Result.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        Toast.makeText(context, "Error fetching movie details", Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            context,
+                            getString(R.string.error_fetching_movie_detail),
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                     }
 
@@ -76,16 +84,16 @@ class MovieDetailFragment : Fragment() {
             releaseDate.text = movie.releaseDate
             status.text = movie.status
             title.text = movie.title
-            image.loadImage(movie.backdropPath, R.drawable.ic_launcher_background)
+            movie.backdropPath.let {
+                image.loadImage(
+                    it,
+                    R.drawable.ic_launcher_background
+                )
+            }
         }
     }
 
     companion object {
         const val MOVIE_ID = "movie_id"
-
-        @JvmStatic
-        fun newInstance(movieId: Long) = MovieDetailFragment().apply {
-            arguments = Bundle().apply { putLong(MOVIE_ID, movieId) }
-        }
     }
 }

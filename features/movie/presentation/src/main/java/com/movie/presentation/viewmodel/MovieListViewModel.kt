@@ -22,7 +22,7 @@ class MovieListViewModel @Inject constructor(
     fun loadMovieList() {
         viewModelScope.launch {
             _moviesList.value = Result.Loading
-            val result = movieListUseCase.getMovieList()
+            val result = movieListUseCase.invoke()
             _moviesList.value = result
         }
     }

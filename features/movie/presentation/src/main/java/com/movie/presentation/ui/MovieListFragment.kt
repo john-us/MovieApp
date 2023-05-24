@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.movie.common.network.Result
+import com.movie.presentation.R
 import com.movie.presentation.adapter.MovieListAdapter
 import com.movie.presentation.databinding.FragmentMovieListBinding
+import com.movie.presentation.ui.MovieDetailFragment.Companion.MOVIE_ID
 import com.movie.presentation.viewmodel.MovieListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -26,13 +30,16 @@ class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        // Initialize the adapter instance only if it hasn't been initialized before
+        if (!::movieListAdapter.isInitialized) {
+            movieListAdapter = MovieListAdapter()
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Initialize views and adapters
-        movieListAdapter = MovieListAdapter()
+
         binding.movieRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = movieListAdapter
@@ -45,9 +52,10 @@ class MovieListFragment : Fragment() {
 
     private fun initListener() {
         movieListAdapter.setOnItemClickListener {
-            startActivity(activity?.let { it1 ->
-                it.id?.let { it2 -> MovieDetailActivity.createIntent(it1, it2) }
-            })
+            findNavController().navigate(
+                R.id.action_movieListFragment_to_movieDetailFragment,
+                bundleOf(MOVIE_ID to it.id)
+            )
         }
     }
 
@@ -62,7 +70,11 @@ class MovieListFragment : Fragment() {
 
                     is Result.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        Toast.makeText(context, "Error fetching movies", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            context,
+                            getString(R.string.error_fetching_movie),
+                            Toast.LENGTH_LONG
+                        ).show()
 
                     }
 
@@ -72,10 +84,5 @@ class MovieListFragment : Fragment() {
                 }
             }
         }
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = MovieListFragment()
     }
 }

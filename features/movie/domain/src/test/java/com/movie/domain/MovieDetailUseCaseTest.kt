@@ -1,5 +1,6 @@
 package com.movie.domain
 
+import com.google.gson.Gson
 import com.movie.common.network.DataException
 import com.movie.common.network.Result
 import com.movie.data.model.MovieDetailModel
@@ -7,58 +8,57 @@ import com.movie.data.repository.MovieRepository
 import com.movie.domain.displaymodel.MovieDetailDisplayModel
 import com.movie.domain.mapper.MovieDetailsMapper
 import com.movie.domain.usecase.MovieDetailsUseCase
+import io.mockk.coEvery
+import io.mockk.mockk
+import io.mockk.spyk
 import junit.framework.TestCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.withContext
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.junit.MockitoJUnitRunner
+import java.nio.file.Files
+import java.nio.file.Paths
 
-@RunWith(MockitoJUnitRunner::class)
 class MovieDetailUseCaseTest {
-    @Mock
     private lateinit var movieRepository: MovieRepository
-
-    @Mock
+    private val movieId: Long = 640146
     private lateinit var movieDetailsMapper: MovieDetailsMapper
     private lateinit var movieDetailsUseCase: MovieDetailsUseCase
 
     @Before
     fun setup() {
+        movieRepository = mockk()
+        movieDetailsMapper = spyk(MovieDetailsMapper()) // Mocking the MovieDetailsMapper
         movieDetailsUseCase = MovieDetailsUseCase(movieRepository, movieDetailsMapper)
     }
 
     @ExperimentalCoroutinesApi
     @Test
     fun `getMovieDetail should return movie detail`() = runTest {
-        val expectedJsonResponse = Result.Success(
-            MovieDetailModel(
-                backdropPath = "/3CxUndGhUcZdt1Zggjdb2HkLLQX.jpg",
-                id = 640146,
-                originalTitle = "Ant-Man and the Wasp: Quantumania",
-                releaseDate = "2023-02-15",
-                status = "",
-                title = "Ant-Man and the Wasp: Quantumania"
-            ),
-        )
-        Mockito.`when`(movieRepository.getMovieDetails(640146)).thenReturn(expectedJsonResponse)
-        val expectedMovieDetail = Result.Success(
-            MovieDetailDisplayModel(
-                "/3CxUndGhUcZdt1Zggjdb2HkLLQX.jpg",
-                640146,
-                "Ant-Man and the Wasp: Quantumania",
-                "2023-02-15",
-                "",
-                "Ant-Man and the Wasp: Quantumania"
-            )
 
+        val jsonFilePath = "src/test/resources/moviedetail.json"
+        val jsonString = String(withContext(Dispatchers.IO) {
+            Files.readAllBytes(Paths.get(jsonFilePath))
+        })
+
+        val gson = Gson()
+        val expectedJsonResponse = Result.Success(
+            gson.fromJson(jsonString, MovieDetailModel::class.java)
+        )
+        coEvery { movieRepository.getMovieDetails(movieId) } returns expectedJsonResponse
+
+        val displayJsonFilePath = "src/test/resources/moviedetaildisplay.json"
+        val displayJsonString = String(withContext(Dispatchers.IO) {
+            Files.readAllBytes(Paths.get(displayJsonFilePath))
+        })
+
+        val expectedMovieDetail = Result.Success(
+            gson.fromJson(displayJsonString, MovieDetailDisplayModel::class.java)
         )
         // When
-        val result = movieDetailsUseCase.getMovieDetails(640146)
-
+        val result = movieDetailsUseCase.invoke(movieId)
         // Then
         TestCase.assertEquals(expectedMovieDetail, result)
     }
@@ -68,15 +68,20 @@ class MovieDetailUseCaseTest {
     fun `getMovieDetail returns error on repository failure`() = runTest {
         // Mock the repository response
         val errorMessage = "Failed to fetch movie detail"
-        Mockito.`when`(movieRepository.getMovieDetails(640146))
-            .thenReturn(Result.Error(DataException(errorMessage)))
+        coEvery { movieRepository.getMovieDetails(movieId) } returns Result.Error(
+            DataException(
+                errorMessage
+            )
+        )
+
         // Call the use case method
-        when (val result = movieDetailsUseCase.getMovieDetails(640146)) {
+        when (val result = movieDetailsUseCase.invoke(movieId)) {
             is Result.Error -> {
                 TestCase.assertEquals(errorMessage, result.exception.message)
             }
 
-            else -> {}
+            else -> {
+            }
         }
     }
 }
