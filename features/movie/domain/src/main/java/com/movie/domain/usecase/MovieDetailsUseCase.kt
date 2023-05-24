@@ -2,17 +2,15 @@ package com.movie.domain.usecase
 
 import com.movie.common.network.Result
 import com.movie.data.repository.MovieRepository
-import com.movie.domain.displaymodel.MovieDetailDisplayModel
-import com.movie.domain.mapper.MovieDetailsMapper
+import com.movie.data.model.display.MovieDetailDisplayModel
+import com.movie.data.mapper.MovieDetailsMapper
 import javax.inject.Inject
 
 
 class MovieDetailsUseCase @Inject constructor(
-    private val movieRepository: MovieRepository,
-    private val movieDetailsMapper: MovieDetailsMapper
+    private val movieRepository: MovieRepository
 ) {
     suspend operator fun invoke(movieId: Long): Result<MovieDetailDisplayModel> {
-        val movieDetailModel = movieRepository.getMovieDetails(movieId)
-        return movieDetailsMapper.mapToDisplayModel(movieDetailModel)
+        return movieRepository.getMovieDetails(movieId)
     }
 }

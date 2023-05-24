@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.movie.common.constant.CommonConstant
 import com.movie.common.network.NetworkException
 import com.movie.common.network.Result
-import com.movie.domain.displaymodel.MovieDetailDisplayModel
+import com.movie.data.model.display.MovieDetailDisplayModel
 import com.movie.domain.usecase.MovieDetailsUseCase
 import com.movie.presentation.viewmodel.MovieDetailViewModel
 import io.mockk.coEvery

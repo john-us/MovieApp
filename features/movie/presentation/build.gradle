@@ -53,6 +53,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':features:movie:data')
     testImplementation rootProject.ext.testDependencies.junit
     androidTestImplementation rootProject.ext.testDependencies.junitAndroid
     androidTestImplementation rootProject.ext.testDependencies.espresso

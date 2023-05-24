@@ -3,14 +3,11 @@ package com.movie.domain
 import com.google.gson.Gson
 import com.movie.common.network.DataException
 import com.movie.common.network.Result
-import com.movie.data.model.MovieListModel
+import com.movie.data.model.display.MovieListDisplayModel
 import com.movie.data.repository.MovieRepository
-import com.movie.domain.displaymodel.MovieListDisplayModel
-import com.movie.domain.mapper.MovieListMapper
 import com.movie.domain.usecase.MovieListUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
-import io.mockk.spyk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,30 +20,33 @@ import java.nio.file.Paths
 
 class MovieListUseCaseTest {
     private lateinit var movieRepository: MovieRepository
-    private lateinit var movieListMapper: MovieListMapper
     private lateinit var movieListUseCase: MovieListUseCase
 
     @Before
     fun setup() {
         movieRepository = mockk()
-        movieListMapper = spyk(MovieListMapper()) // Mocking the MovieListMapper
-        movieListUseCase = MovieListUseCase(movieRepository, movieListMapper)
+        movieListUseCase = MovieListUseCase(movieRepository)
     }
 
     @ExperimentalCoroutinesApi
     @Test
     fun `execute should return movie list`() = runTest {
         // Read the movie list JSON from the local file
-        val jsonFilePath = "src/test/resources/movielist.json"
+        val jsonFilePath = "src/test/resources/movielistdisplay.json"
         val jsonString = String(withContext(Dispatchers.IO) {
             Files.readAllBytes(Paths.get(jsonFilePath))
         })
 
         // Parse the JSON into a MovieListModel object using Gson
         val gson = Gson()
+
         val expectedJsonResponse = Result.Success(
-            gson.fromJson(jsonString, MovieListModel::class.java)
+            gson.fromJson(
+                jsonString,
+                Array<MovieListDisplayModel>::class.java
+            ).toList()
         )
+
 
         coEvery { movieRepository.getMovieList() } returns expectedJsonResponse
 

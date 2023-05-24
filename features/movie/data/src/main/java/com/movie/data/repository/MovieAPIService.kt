@@ -2,8 +2,8 @@ package com.movie.data.repository
 
 
 import com.movie.data.BuildConfig
-import com.movie.data.model.MovieDetailModel
-import com.movie.data.model.MovieListModel
+import com.movie.data.model.api.MovieDetailModel
+import com.movie.data.model.api.MovieListModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

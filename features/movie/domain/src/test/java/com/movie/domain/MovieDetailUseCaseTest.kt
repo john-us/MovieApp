@@ -3,10 +3,9 @@ package com.movie.domain
 import com.google.gson.Gson
 import com.movie.common.network.DataException
 import com.movie.common.network.Result
-import com.movie.data.model.MovieDetailModel
+import com.movie.data.mapper.MovieDetailsMapper
+import com.movie.data.model.display.MovieDetailDisplayModel
 import com.movie.data.repository.MovieRepository
-import com.movie.domain.displaymodel.MovieDetailDisplayModel
-import com.movie.domain.mapper.MovieDetailsMapper
 import com.movie.domain.usecase.MovieDetailsUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -31,21 +30,21 @@ class MovieDetailUseCaseTest {
     fun setup() {
         movieRepository = mockk()
         movieDetailsMapper = spyk(MovieDetailsMapper()) // Mocking the MovieDetailsMapper
-        movieDetailsUseCase = MovieDetailsUseCase(movieRepository, movieDetailsMapper)
+        movieDetailsUseCase = MovieDetailsUseCase(movieRepository)
     }
 
     @ExperimentalCoroutinesApi
     @Test
     fun `getMovieDetail should return movie detail`() = runTest {
 
-        val jsonFilePath = "src/test/resources/moviedetail.json"
+        val jsonFilePath = "src/test/resources/moviedetaildisplay.json"
         val jsonString = String(withContext(Dispatchers.IO) {
             Files.readAllBytes(Paths.get(jsonFilePath))
         })
 
         val gson = Gson()
         val expectedJsonResponse = Result.Success(
-            gson.fromJson(jsonString, MovieDetailModel::class.java)
+            gson.fromJson(jsonString, MovieDetailDisplayModel::class.java)
         )
         coEvery { movieRepository.getMovieDetails(movieId) } returns expectedJsonResponse
 

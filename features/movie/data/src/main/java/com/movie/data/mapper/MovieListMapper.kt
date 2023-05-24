@@ -1,10 +1,10 @@
-package com.movie.domain.mapper
+package com.movie.data.mapper
 
 import com.movie.common.constant.CommonConstant
 import com.movie.common.network.DataException
 import com.movie.common.network.Result
-import com.movie.data.model.MovieListModel
-import com.movie.domain.displaymodel.MovieListDisplayModel
+import com.movie.data.model.api.MovieListModel
+import com.movie.data.model.display.MovieListDisplayModel
 import javax.inject.Inject
 
 class MovieListMapper @Inject constructor() {
