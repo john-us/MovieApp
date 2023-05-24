@@ -14,5 +14,4 @@ fun ImageView.loadImage(url: String, drawable: Int) {
             .error(drawable)
             .diskCacheStrategy(DiskCacheStrategy.DATA)
     ).load(CommonConstant.IMAGE_URL + url).into(this)
-
 }
