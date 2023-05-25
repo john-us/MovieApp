@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.movie.common.network.Result
 import com.movie.common.util.loadImage
 import com.movie.domain.displaymodel.MovieDetailDisplayModel
@@ -51,28 +53,30 @@ class MovieDetailFragment : Fragment() {
 
     private fun initObservers() {
         lifecycleScope.launch {
-            movieDetailViewModel.movieDetail.collect { result ->
-                when (result) {
-                    is Result.Success -> {
-                        binding.progressBar.visibility = View.GONE
-                        bindData(result.data)
-                    }
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                movieDetailViewModel.movieDetail.collect { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            binding.progressBar.visibility = View.GONE
+                            bindData(result.data)
+                        }
 
-                    is Result.Error -> {
-                        binding.progressBar.visibility = View.GONE
-                        Toast.makeText(
-                            context,
-                            getString(R.string.error_fetching_movie_detail),
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
-                    }
+                        is Result.Error -> {
+                            binding.progressBar.visibility = View.GONE
+                            Toast.makeText(
+                                context,
+                                getString(R.string.error_fetching_movie_detail),
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        }
 
-                    is Result.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
+                        is Result.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
 
-                    else -> {}
+                        else -> {}
+                    }
                 }
             }
         }
