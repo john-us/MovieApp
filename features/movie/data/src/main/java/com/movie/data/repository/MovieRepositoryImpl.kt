@@ -7,16 +7,17 @@ import com.movie.common.network.NetworkException
 import com.movie.common.network.Result
 import com.movie.data.model.MovieDetailModel
 import com.movie.data.model.MovieListModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import okio.IOException
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
-    private val service: MovieAPIService
+    private val service: MovieAPIService,
+    private val dispatcher: CoroutineDispatcher
 ) : MovieRepository {
     override suspend fun getMovieList(): Result<MovieListModel> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             try {
                 val response = service.getMovieList()
                 if (response.isSuccessful) {
@@ -35,7 +36,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMovieDetails(movieId: Long): Result<MovieDetailModel> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             try {
                 val response = service.getMovieDetails(movieId)
                 if (response.isSuccessful) {

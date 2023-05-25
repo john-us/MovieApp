@@ -7,6 +7,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
 
 @Module
@@ -14,11 +16,17 @@ import retrofit2.Retrofit
 object MovieRepositoryModule {
     @Provides
     fun provideMovieAPIService(retrofit: Retrofit): MovieAPIService =
-         retrofit.create(MovieAPIService::class.java)
+        retrofit.create(MovieAPIService::class.java)
+
+    @Provides
+    fun provideDispatcher(): CoroutineDispatcher = Dispatchers.IO
 
 
     @Provides
-    fun provideMovieRepository(apiService: MovieAPIService): MovieRepository =
-         MovieRepositoryImpl(apiService)
+    fun provideMovieRepository(
+        apiService: MovieAPIService,
+        dispatcher: CoroutineDispatcher
+    ): MovieRepository =
+        MovieRepositoryImpl(apiService, dispatcher)
 
 }
