@@ -3,8 +3,8 @@ package com.movie.domain.mapper
 import com.movie.common.constant.CommonConstant
 import com.movie.common.network.DataException
 import com.movie.common.network.Result
-import com.movie.data.model.MovieDetailModel
-import com.movie.domain.displaymodel.MovieDetailDisplayModel
+import com.movie.domain.model.apimodel.MovieDetailModel
+import com.movie.domain.model.displaymodel.MovieDetailDisplayModel
 import javax.inject.Inject
 
 class MovieDetailsMapper @Inject constructor() {

@@ -3,10 +3,10 @@ package com.movie.domain
 import com.google.gson.Gson
 import com.movie.common.network.DataException
 import com.movie.common.network.Result
-import com.movie.data.model.MovieListModel
-import com.movie.data.repository.MovieRepository
-import com.movie.domain.displaymodel.MovieListDisplayModel
+import com.movie.domain.ireprository.IMovieRepository
 import com.movie.domain.mapper.MovieListMapper
+import com.movie.domain.model.apimodel.MovieListModel
+import com.movie.domain.model.displaymodel.MovieListDisplayModel
 import com.movie.domain.usecase.MovieListUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -22,7 +22,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 class MovieListUseCaseTest {
-    private lateinit var movieRepository: MovieRepository
+    private lateinit var movieRepository: IMovieRepository
     private lateinit var movieListMapper: MovieListMapper
     private lateinit var movieListUseCase: MovieListUseCase
 

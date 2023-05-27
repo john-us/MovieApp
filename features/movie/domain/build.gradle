@@ -55,13 +55,11 @@ dependencies {
     androidTestImplementation rootProject.ext.testDependencies.espresso
     testImplementation rootProject.ext.testDependencies.mockk
     testImplementation rootProject.ext.testDependencies.coroutinesTest
-    testImplementation rootProject.ext.dependencies.gson
+    implementation rootProject.ext.dependencies.gson
     implementation rootProject.ext.dependencies.hilt
     kapt rootProject.ext.dependencies.hiltCompiler
     //common module
     implementation project(path: ':common')
-    //data module
-    implementation project(path: ':features:movie:data')
 
 
 }

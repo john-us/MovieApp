@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.movie.common.network.NetworkException
 import com.movie.common.network.Result
-import com.movie.domain.displaymodel.MovieDetailDisplayModel
+import com.movie.domain.model.displaymodel.MovieDetailDisplayModel
 import com.movie.domain.usecase.MovieDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

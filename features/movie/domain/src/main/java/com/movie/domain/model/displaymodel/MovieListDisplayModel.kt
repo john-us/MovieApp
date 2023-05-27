@@ -1,4 +1,4 @@
-package com.movie.domain.displaymodel
+package com.movie.domain.model.displaymodel
 
 data class MovieListDisplayModel(
     val id: Long,

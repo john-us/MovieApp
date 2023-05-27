@@ -52,11 +52,12 @@ android {
 }
 
 dependencies {
-    implementation rootProject.ext.dependencies.gson
     implementation rootProject.ext.dependencies.hilt
     kapt rootProject.ext.dependencies.hiltCompiler
     implementation rootProject.ext.dependencies.retrofit
     implementation rootProject.ext.dependencies.retrofitConverter
     //common module
     implementation project(path: ':common')
+    //domain module
+    implementation project(path: ':features:movie:domain')
 }

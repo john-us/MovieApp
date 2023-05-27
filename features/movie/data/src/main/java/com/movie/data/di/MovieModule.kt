@@ -1,8 +1,8 @@
 package com.movie.data.di
 
 import com.movie.data.repository.MovieAPIService
-import com.movie.data.repository.MovieRepository
 import com.movie.data.repository.MovieRepositoryImpl
+import com.movie.domain.ireprository.IMovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +26,7 @@ object MovieRepositoryModule {
     fun provideMovieRepository(
         apiService: MovieAPIService,
         dispatcher: CoroutineDispatcher
-    ): MovieRepository =
+    ): IMovieRepository =
         MovieRepositoryImpl(apiService, dispatcher)
 
 }
