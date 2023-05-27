@@ -1,7 +1,7 @@
-package com.movie.data.model
-
+package com.movie.domain.model.apimodel
 
 import com.google.gson.annotations.SerializedName
+
 
 data class MovieDetailModel(
     val adult: Boolean? = null,

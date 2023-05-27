@@ -41,8 +41,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility rootProject.ext.app_config.javaVersion
+        targetCompatibility rootProject.ext.app_config.javaVersion
     }
     kotlinOptions {
         jvmTarget = rootProject.ext.app_config.jvmTarget
@@ -55,13 +55,11 @@ dependencies {
     androidTestImplementation rootProject.ext.testDependencies.espresso
     testImplementation rootProject.ext.testDependencies.mockk
     testImplementation rootProject.ext.testDependencies.coroutinesTest
-    testImplementation rootProject.ext.dependencies.gson
+    implementation rootProject.ext.dependencies.gson
     implementation rootProject.ext.dependencies.hilt
     kapt rootProject.ext.dependencies.hiltCompiler
     //common module
     implementation project(path: ':common')
-    //data module
-    implementation project(path: ':features:movie:data')
 
 
 }

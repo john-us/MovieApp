@@ -13,7 +13,8 @@ ext {
             versionName      : "1.0",
             buildToolsVersion: "30.0.2",
             jvmTarget        : '1.8',
-            applicationId    : 'com.movieapp'
+            applicationId    : 'com.movieapp',
+            javaVersion      : JavaVersion.VERSION_1_8
     ]
     //Library Version
     gsonVersion = '2.10.1'
@@ -23,7 +24,9 @@ ext {
     material = '1.9.0'
     lifecycleViewModel = '2.6.1'
     lifecycleExtension = '2.2.0'
-    navigation_version = "2.5.3"
+    navigationVersion = "2.5.3"
+    glide = "4.15.1"
+    logInterceptor = "4.9.1"
 
 
     //Test library version
@@ -44,8 +47,10 @@ ext {
             material          : "com.google.android.material:material:${material}",
             lifecycleViewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleViewModel}",
             lifecycleExtension: "androidx.lifecycle:lifecycle-extensions:${lifecycleExtension}",
-            navigation_frag   : "androidx.navigation:navigation-fragment-ktx:${navigation_version}",
-            navigation_ui     : "androidx.navigation:navigation-ui-ktx:${navigation_version}"
+            navigation_frag   : "androidx.navigation:navigation-fragment-ktx:${navigationVersion}",
+            navigation_ui     : "androidx.navigation:navigation-ui-ktx:${navigationVersion}",
+            glide             : "com.github.bumptech.glide:glide:${glide}",
+            logInterceptor    : "com.squareup.okhttp3:logging-interceptor:${logInterceptor}"
 
     ]
     testDependencies = [

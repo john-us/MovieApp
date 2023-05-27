@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.movie.common.network.Result
 import com.movie.common.util.loadImage
-import com.movie.domain.displaymodel.MovieDetailDisplayModel
+import com.movie.domain.model.displaymodel.MovieDetailDisplayModel
 import com.movie.presentation.R
 import com.movie.presentation.databinding.FragmentMovieDetailBinding
 import com.movie.presentation.viewmodel.MovieDetailViewModel

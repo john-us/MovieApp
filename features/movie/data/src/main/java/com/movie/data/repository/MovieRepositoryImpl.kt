@@ -5,8 +5,9 @@ import com.movie.common.network.ApiException
 import com.movie.common.network.DataException
 import com.movie.common.network.NetworkException
 import com.movie.common.network.Result
-import com.movie.data.model.MovieDetailModel
-import com.movie.data.model.MovieListModel
+import com.movie.domain.reprositorycontract.IMovieRepository
+import com.movie.domain.model.apimodel.MovieDetailModel
+import com.movie.domain.model.apimodel.MovieListModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import okio.IOException
@@ -15,7 +16,7 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val service: MovieAPIService,
     private val dispatcher: CoroutineDispatcher
-) : MovieRepository {
+) : IMovieRepository {
     override suspend fun getMovieList(): Result<MovieListModel> {
         return withContext(dispatcher) {
             try {

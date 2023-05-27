@@ -1,6 +1,7 @@
-package com.movie.data.model
+package com.movie.domain.model.apimodel
 
 import com.google.gson.annotations.SerializedName
+
 
 data class MovieListModel(
     val page: Int? = 0,

@@ -2,7 +2,7 @@ package com.movie.presentation.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.movie.common.util.loadImage
-import com.movie.domain.displaymodel.MovieListDisplayModel
+import com.movie.domain.model.displaymodel.MovieListDisplayModel
 import com.movie.presentation.R
 import com.movie.presentation.databinding.ItemMovielistBinding
 
