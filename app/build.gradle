@@ -53,7 +53,7 @@ android {
         jvmTarget = rootProject.ext.app_config.jvmTarget
     }
     buildFeatures {
-        viewBinding true
+        buildConfig = true
     }
 }
 

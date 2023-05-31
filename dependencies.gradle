@@ -1,9 +1,14 @@
 ext {
     //root gradle version
-    applicationVersion = '7.3.1'
-    kotlinVersion = '1.8.21'
-    androidLibraryVersion = '7.3.1'
+    applicationVersion = '8.0.1'
+    kotlinVersion = '1.7.20'
+    androidLibraryVersion = '8.0.1'
     hiltVersion = '2.44'
+    //compose library versions
+    composeBom = '2022.10.00'
+    composeActivity = '1.7.2'
+    kotlinBom = '1.8.0'
+    safeArgs = '2.5.3'
     //App level Version
     app_config = [
             compileSdkVersion: 33,
@@ -50,15 +55,26 @@ ext {
             navigation_frag   : "androidx.navigation:navigation-fragment-ktx:${navigationVersion}",
             navigation_ui     : "androidx.navigation:navigation-ui-ktx:${navigationVersion}",
             glide             : "com.github.bumptech.glide:glide:${glide}",
-            logInterceptor    : "com.squareup.okhttp3:logging-interceptor:${logInterceptor}"
+            logInterceptor    : "com.squareup.okhttp3:logging-interceptor:${logInterceptor}",
+            composeBom        : "androidx.compose:compose-bom:${composeBom}",
+            composeActivity   : "androidx.activity:activity-compose:${composeActivity}",
+            composeUi         : "androidx.compose.ui:ui",
+            composeGraphics   : "androidx.compose.ui:ui-graphics",
+            composeUiTooling  : "androidx.compose.ui:ui-tooling-preview",
+            composeMaterial   : "androidx.compose.material3:material3",
+            kotlinBom         : "org.jetbrains.kotlin:kotlin-bom:${kotlinBom}"
+
 
     ]
     testDependencies = [
-            junit         : "junit:junit:${junit}",
-            junitAndroid  : "androidx.test.ext:junit:${junitAndroid}",
-            espresso      : "androidx.test.espresso:espresso-core:${espresso}",
-            coroutinesTest: "org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesTest}",
-            mockk         : "io.mockk:mockk:${mockk}"
+            junit            : "junit:junit:${junit}",
+            junitAndroid     : "androidx.test.ext:junit:${junitAndroid}",
+            espresso         : "androidx.test.espresso:espresso-core:${espresso}",
+            coroutinesTest   : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesTest}",
+            mockk            : "io.mockk:mockk:${mockk}",
+            composeUiTest    : "androidx.compose.ui:ui-test-junit4",
+            composeUiTooling : "androidx.compose.ui:ui-tooling",
+            composeUiManifest: "androidx.compose.ui:ui-test-manifest"
     ]
 
 }

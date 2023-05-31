@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
 }
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply from: rootProject.file('dependencies.gradle')
 android {
     ext {
@@ -48,7 +49,7 @@ android {
         jvmTarget = rootProject.ext.app_config.jvmTarget
     }
     buildFeatures {
-        viewBinding true
+        compose true
     }
 }
 
@@ -56,6 +57,10 @@ dependencies {
     testImplementation rootProject.ext.testDependencies.junit
     androidTestImplementation rootProject.ext.testDependencies.junitAndroid
     androidTestImplementation rootProject.ext.testDependencies.espresso
+    androidTestImplementation platform(rootProject.ext.dependencies.composeBom)
+    androidTestImplementation rootProject.ext.testDependencies.composeUiTest
+    debugImplementation rootProject.ext.testDependencies.composeUiTooling
+    debugImplementation rootProject.ext.testDependencies.composeUiManifest
     testImplementation rootProject.ext.testDependencies.mockk
     testImplementation rootProject.ext.testDependencies.coroutinesTest
     testImplementation rootProject.ext.dependencies.gson
@@ -66,6 +71,15 @@ dependencies {
     implementation rootProject.ext.dependencies.lifecycleViewModel
     implementation rootProject.ext.dependencies.navigation_frag
     implementation rootProject.ext.dependencies.navigation_ui
+    implementation rootProject.ext.dependencies.composeActivity
+    implementation platform(rootProject.ext.dependencies.composeBom)
+    implementation rootProject.ext.dependencies.composeUi
+    implementation rootProject.ext.dependencies.composeGraphics
+    implementation rootProject.ext.dependencies.composeUiTooling
+    implementation rootProject.ext.dependencies.composeMaterial
+    implementation(platform(rootProject.ext.dependencies.kotlinBom))
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
 
     //domain dependency
     implementation project(path: ':features:movie:domain')

@@ -49,6 +49,9 @@ android {
     kotlinOptions {
         jvmTarget = rootProject.ext.app_config.jvmTarget
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {

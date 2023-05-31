@@ -6,6 +6,10 @@ buildscript {
         applicationVersion = rootProject.ext.applicationVersion
         androidLibraryVersion = rootProject.ext.androidLibraryVersion
         hiltVersion = rootProject.ext.hiltVersion
+        safeArgs = rootProject.ext.safeArgs
+    }
+    dependencies {
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${safeArgs}"
     }
 }
 plugins {
