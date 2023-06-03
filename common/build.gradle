@@ -60,5 +60,4 @@ dependencies {
     implementation rootProject.ext.dependencies.retrofitConverter
     implementation rootProject.ext.dependencies.logInterceptor
     implementation rootProject.ext.dependencies.gson
-    implementation rootProject.ext.dependencies.glide
 }

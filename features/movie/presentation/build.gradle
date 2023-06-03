@@ -78,8 +78,10 @@ dependencies {
     implementation rootProject.ext.dependencies.composeUiTooling
     implementation rootProject.ext.dependencies.composeMaterial
     implementation(platform(rootProject.ext.dependencies.kotlinBom))
-    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
-    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
+    implementation rootProject.ext.dependencies.navigationFragment
+    implementation rootProject.ext.dependencies.navigationUi
+    implementation rootProject.ext.dependencies.gson
+    implementation rootProject.ext.dependencies.coilCompose
 
     //domain dependency
     implementation project(path: ':features:movie:domain')

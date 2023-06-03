@@ -15,7 +15,7 @@ class MovieListMapper @Inject constructor() {
                     MovieListDisplayModel(
                         id = id,
                         title = title,
-                        backdropPath = backdropPath,
+                        backdropPath = CommonConstant.IMAGE_URL + backdropPath,
                         releaseDate = releaseDate
                     )
                 }

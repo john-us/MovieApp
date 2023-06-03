@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_movie_detail">
         <argument
             android:name="movieId"
-            app:argType="string" />
+            app:argType="long" />
         <action
             android:id="@+id/actionMovieDetailFragmentToMovieListFragment"
             app:destination="@id/movieListFragment"

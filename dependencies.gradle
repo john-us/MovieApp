@@ -30,8 +30,10 @@ ext {
     lifecycleViewModel = '2.6.1'
     lifecycleExtension = '2.2.0'
     navigationVersion = "2.5.3"
-    glide = "4.15.1"
     logInterceptor = "4.9.1"
+    navigationFragment = '2.5.3'
+    navigationUi = '2.5.3'
+    coilCompose = '2.4.0'
 
 
     //Test library version
@@ -54,7 +56,6 @@ ext {
             lifecycleExtension: "androidx.lifecycle:lifecycle-extensions:${lifecycleExtension}",
             navigation_frag   : "androidx.navigation:navigation-fragment-ktx:${navigationVersion}",
             navigation_ui     : "androidx.navigation:navigation-ui-ktx:${navigationVersion}",
-            glide             : "com.github.bumptech.glide:glide:${glide}",
             logInterceptor    : "com.squareup.okhttp3:logging-interceptor:${logInterceptor}",
             composeBom        : "androidx.compose:compose-bom:${composeBom}",
             composeActivity   : "androidx.activity:activity-compose:${composeActivity}",
@@ -62,7 +63,10 @@ ext {
             composeGraphics   : "androidx.compose.ui:ui-graphics",
             composeUiTooling  : "androidx.compose.ui:ui-tooling-preview",
             composeMaterial   : "androidx.compose.material3:material3",
-            kotlinBom         : "org.jetbrains.kotlin:kotlin-bom:${kotlinBom}"
+            kotlinBom         : "org.jetbrains.kotlin:kotlin-bom:${kotlinBom}",
+            navigationFragment: "androidx.navigation:navigation-fragment-ktx:${navigationFragment}",
+            navigationUi      : "androidx.navigation:navigation-ui-ktx:${navigationUi}",
+            coilCompose       : "io.coil-kt:coil-compose:${coilCompose}"
 
 
     ]
