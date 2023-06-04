@@ -1,5 +1,6 @@
 package com.movie.data.di
 
+import com.movie.data.mapper.MovieMapper
 import com.movie.data.repository.MovieAPIService
 import com.movie.data.repository.MovieRepositoryImpl
 import com.movie.domain.reprositorycontract.IMovieRepository
@@ -25,8 +26,9 @@ object MovieRepositoryModule {
     @Provides
     fun provideMovieRepository(
         apiService: MovieAPIService,
-        dispatcher: CoroutineDispatcher
+        dispatcher: CoroutineDispatcher,
+        mapper: MovieMapper
     ): IMovieRepository =
-        MovieRepositoryImpl(apiService, dispatcher)
+        MovieRepositoryImpl(apiService, dispatcher, mapper)
 
 }

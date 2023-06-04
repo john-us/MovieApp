@@ -1,4 +1,4 @@
-package com.movie.domain.model.displaymodel
+package com.movie.domain.model
 
 data class MovieDetailDisplayModel(
     val backdropPath: String,

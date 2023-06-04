@@ -3,14 +3,11 @@ package com.movie.domain
 import com.google.gson.Gson
 import com.movie.common.network.DataException
 import com.movie.common.network.Result
+import com.movie.domain.model.MovieDetailDisplayModel
 import com.movie.domain.reprositorycontract.IMovieRepository
-import com.movie.domain.mapper.MovieDetailsMapper
-import com.movie.domain.model.apimodel.MovieDetailModel
-import com.movie.domain.model.displaymodel.MovieDetailDisplayModel
 import com.movie.domain.usecase.MovieDetailsUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
-import io.mockk.spyk
 import junit.framework.TestCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,43 +21,33 @@ import java.nio.file.Paths
 class MovieDetailUseCaseTest {
     private lateinit var movieRepository: IMovieRepository
     private val movieId: Long = 640146
-    private lateinit var movieDetailsMapper: MovieDetailsMapper
     private lateinit var movieDetailsUseCase: MovieDetailsUseCase
 
     @Before
     fun setup() {
         movieRepository = mockk()
-        movieDetailsMapper = spyk(MovieDetailsMapper()) // Mocking the MovieDetailsMapper
-        movieDetailsUseCase = MovieDetailsUseCase(movieRepository, movieDetailsMapper)
+        movieDetailsUseCase = MovieDetailsUseCase(movieRepository)
     }
 
     @ExperimentalCoroutinesApi
     @Test
     fun `getMovieDetail should return movie detail`() = runTest {
 
-        val jsonFilePath = "src/test/resources/moviedetail.json"
+        val jsonFilePath = "src/test/resources/moviedetaildisplay.json"
         val jsonString = String(withContext(Dispatchers.IO) {
             Files.readAllBytes(Paths.get(jsonFilePath))
         })
 
         val gson = Gson()
         val expectedJsonResponse = Result.Success(
-            gson.fromJson(jsonString, MovieDetailModel::class.java)
+            gson.fromJson(jsonString, MovieDetailDisplayModel::class.java)
         )
         coEvery { movieRepository.getMovieDetails(movieId) } returns expectedJsonResponse
 
-        val displayJsonFilePath = "src/test/resources/moviedetaildisplay.json"
-        val displayJsonString = String(withContext(Dispatchers.IO) {
-            Files.readAllBytes(Paths.get(displayJsonFilePath))
-        })
-
-        val expectedMovieDetail = Result.Success(
-            gson.fromJson(displayJsonString, MovieDetailDisplayModel::class.java)
-        )
         // When
         val result = movieDetailsUseCase.invoke(movieId)
         // Then
-        TestCase.assertEquals(expectedMovieDetail, result)
+        TestCase.assertEquals(expectedJsonResponse, result)
     }
 
     @ExperimentalCoroutinesApi

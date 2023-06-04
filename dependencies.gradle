@@ -6,6 +6,7 @@ ext {
     hiltVersion = '2.44'
     //compose library versions
     composeBom = '2022.10.00'
+    composeConstraint = '1.1.0-alpha10'
     composeActivity = '1.7.2'
     kotlinBom = '1.8.0'
     safeArgs = '2.5.3'
@@ -63,6 +64,7 @@ ext {
             composeGraphics   : "androidx.compose.ui:ui-graphics",
             composeUiTooling  : "androidx.compose.ui:ui-tooling-preview",
             composeMaterial   : "androidx.compose.material3:material3",
+            composeConstraint : "androidx.constraintlayout:constraintlayout-compose:${composeConstraint}",
             kotlinBom         : "org.jetbrains.kotlin:kotlin-bom:${kotlinBom}",
             navigationFragment: "androidx.navigation:navigation-fragment-ktx:${navigationFragment}",
             navigationUi      : "androidx.navigation:navigation-ui-ktx:${navigationUi}",

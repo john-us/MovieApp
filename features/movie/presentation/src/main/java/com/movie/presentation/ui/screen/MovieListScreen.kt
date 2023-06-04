@@ -2,7 +2,6 @@ package com.movie.presentation.ui.screen
 
 import CustomImage
 import android.content.Context
-import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -30,12 +29,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.movie.common.network.Result
-import com.movie.domain.model.displaymodel.MovieListDisplayModel
+import com.movie.domain.model.MovieListDisplayModel
 import com.movie.presentation.R
-import com.movie.presentation.constant.DARK_MODE
-import com.movie.presentation.constant.LIGHT_MODE
 import com.movie.presentation.viewmodel.MovieListViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 
@@ -129,11 +125,4 @@ fun MovieListItem(movie: MovieListDisplayModel, click: () -> Unit) {
 
         }
     }
-}
-
-@Preview(name = LIGHT_MODE)
-@Preview(name = DARK_MODE, uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
-@Composable
-fun PreviewComposableList() {
-
 }

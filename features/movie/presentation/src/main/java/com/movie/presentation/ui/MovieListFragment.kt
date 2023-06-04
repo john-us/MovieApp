@@ -27,7 +27,7 @@ class MovieListFragment : Fragment() {
                             movieId.id
                         )
                     )
-                }, context = requireContext())
+                }, context = context)
             }
         }
 

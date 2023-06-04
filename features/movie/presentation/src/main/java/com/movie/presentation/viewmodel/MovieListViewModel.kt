@@ -4,7 +4,7 @@ package com.movie.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.movie.common.network.Result
-import com.movie.domain.model.displaymodel.MovieListDisplayModel
+import com.movie.domain.model.MovieListDisplayModel
 import com.movie.domain.usecase.MovieListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +22,7 @@ class MovieListViewModel @Inject constructor(
     fun loadMovieList() {
         viewModelScope.launch {
             _moviesList.value = Result.Loading
-            val result = movieListUseCase.invoke()
+            val result = movieListUseCase()
             _moviesList.value = result
         }
     }

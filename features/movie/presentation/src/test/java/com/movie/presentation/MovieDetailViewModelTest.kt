@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.movie.common.constant.CommonConstant
 import com.movie.common.network.NetworkException
 import com.movie.common.network.Result
-import com.movie.domain.model.displaymodel.MovieDetailDisplayModel
+import com.movie.domain.model.MovieDetailDisplayModel
 import com.movie.domain.usecase.MovieDetailsUseCase
 import com.movie.presentation.viewmodel.MovieDetailViewModel
 import io.mockk.coEvery
@@ -60,7 +60,7 @@ class MovieDetailViewModelTest {
         val expectedData = Result.Success(
             Gson().fromJson(jsonString, MovieDetailDisplayModel::class.java)
         )
-        coEvery { movieDetailsUseCase.invoke(movieId) } returns expectedData
+        coEvery { movieDetailsUseCase(movieId) } returns expectedData
 
         movieDetailViewModel.loadMovieDetail(movieId)
 
@@ -76,7 +76,7 @@ class MovieDetailViewModelTest {
         val expectedData = Result.Error(
             NetworkException(CommonConstant.UnknownError)
         )
-        coEvery { movieDetailsUseCase.invoke(movieId) } returns expectedData
+        coEvery { movieDetailsUseCase(movieId) } returns expectedData
 
         movieDetailViewModel.loadMovieDetail(movieId)
 

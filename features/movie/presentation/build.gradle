@@ -82,6 +82,7 @@ dependencies {
     implementation rootProject.ext.dependencies.navigationUi
     implementation rootProject.ext.dependencies.gson
     implementation rootProject.ext.dependencies.coilCompose
+    implementation rootProject.ext.dependencies.composeConstraint
 
     //domain dependency
     implementation project(path: ':features:movie:domain')
