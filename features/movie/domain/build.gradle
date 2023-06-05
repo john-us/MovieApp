@@ -51,8 +51,6 @@ android {
 
 dependencies {
     testImplementation rootProject.ext.testDependencies.junit
-    androidTestImplementation rootProject.ext.testDependencies.junitAndroid
-    androidTestImplementation rootProject.ext.testDependencies.espresso
     testImplementation rootProject.ext.testDependencies.mockk
     testImplementation rootProject.ext.testDependencies.coroutinesTest
     implementation rootProject.ext.dependencies.gson
