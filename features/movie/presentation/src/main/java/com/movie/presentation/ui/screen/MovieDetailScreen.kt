@@ -23,6 +23,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.movie.common.network.Result
 import com.movie.domain.model.MovieDetailDisplayModel
 import com.movie.presentation.R
@@ -115,6 +116,11 @@ fun MovieDetailUI(movieDetail: MovieDetailDisplayModel) {
                     start.linkTo(
                         titleLabel.end
                     )
+                    end.linkTo(
+                        parent.end,
+                        margin = space10
+                    )
+                    width = Dimension.fillToConstraints
 
                 }
 
@@ -127,7 +133,7 @@ fun MovieDetailUI(movieDetail: MovieDetailDisplayModel) {
             modifier = Modifier
                 .constrainAs(releaseDateLabel) {
                     top.linkTo(
-                        titleLabel.bottom,
+                        title.bottom,
                         margin = space10
                     )
                 }
@@ -142,7 +148,7 @@ fun MovieDetailUI(movieDetail: MovieDetailDisplayModel) {
             modifier = Modifier
                 .constrainAs(releaseDate) {
                     top.linkTo(
-                        titleLabel.bottom,
+                        title.bottom,
                         margin = space10
                     )
                     start.linkTo(

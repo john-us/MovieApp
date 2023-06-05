@@ -10,29 +10,28 @@ import javax.inject.Inject
 
 class MovieMapper @Inject constructor() {
     fun mapToDisplayModel(movieDetailModel: MovieDetailModel): Result<MovieDetailDisplayModel> {
-        return Result.Success(
-            with(movieDetailModel) {
+        return movieDetailModel.let {
+            Result.Success(
                 MovieDetailDisplayModel(
-                    id = id,
-                    backdropPath = CommonConstant.IMAGE_URL + backdropPath,
-                    releaseDate = releaseDate,
-                    title = title,
-                    status = status,
-                    originalTitle = originalTitle
+                    id = it.id,
+                    backdropPath = CommonConstant.IMAGE_URL + it.backdropPath,
+                    releaseDate = it.releaseDate,
+                    title = it.title,
+                    status = it.status,
+                    originalTitle = it.originalTitle
                 )
-            })
-
-
+            )
+        }
     }
 
     fun mapToDisplayModel(movieListModel: MovieListModel): Result<List<MovieListDisplayModel>> {
         return Result.Success(movieListModel.results?.map { movie ->
-            with(movie) {
+            movie.let {
                 MovieListDisplayModel(
-                    id = id,
-                    title = title,
-                    backdropPath = CommonConstant.IMAGE_URL + backdropPath,
-                    releaseDate = releaseDate
+                    id = it.id,
+                    title = it.title,
+                    backdropPath = CommonConstant.IMAGE_URL + it.backdropPath,
+                    releaseDate = it.releaseDate
                 )
             }
         } ?: listOf())

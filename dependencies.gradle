@@ -39,8 +39,6 @@ ext {
 
     //Test library version
     junit = '4.13.2'
-    junitAndroid = '1.1.5'
-    espresso = '3.5.1'
     coroutinesTest = '1.6.4'
     mockk = '1.12.0'
 
@@ -74,8 +72,6 @@ ext {
     ]
     testDependencies = [
             junit            : "junit:junit:${junit}",
-            junitAndroid     : "androidx.test.ext:junit:${junitAndroid}",
-            espresso         : "androidx.test.espresso:espresso-core:${espresso}",
             coroutinesTest   : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesTest}",
             mockk            : "io.mockk:mockk:${mockk}",
             composeUiTest    : "androidx.compose.ui:ui-test-junit4",
