@@ -29,8 +29,6 @@ import java.nio.file.Paths
 class MovieListViewModelTest {
     private lateinit var movieListViewModel: MovieListViewModel
     private val testDispatcher = StandardTestDispatcher()
-    private val delayTime: Long = 1000
-
     private lateinit var movieListUseCase: MovieListUseCase
 
     @Before
@@ -47,42 +45,43 @@ class MovieListViewModelTest {
     }
 
     @Test
-    fun `Movie data success`() = runTest {
-        // Read the movie list display JSON from the local file
-        val displayJsonFilePath = "src/test/resources/movielistdisplay.json"
-        val displayJsonString = String(withContext(Dispatchers.IO) {
-            Files.readAllBytes(Paths.get(displayJsonFilePath))
-        })
+    fun `given movie data available, when loadMovieList is called, then movie data successfully displayed`() =
+        runTest {
+            // Read the movie list display JSON from the local file
+            val displayJsonString = String(withContext(Dispatchers.IO) {
+                Files.readAllBytes(Paths.get(movieListDisplayPath))
+            })
 
-        // Parse the JSON into a List<MovieListDisplayModel> using Gson
-        val expectedData = Result.Success(
-            Gson().fromJson(
-                displayJsonString,
-                Array<MovieListDisplayModel>::class.java
-            ).toList()
-        )
-        coEvery { movieListUseCase() } returns expectedData
+            // Parse the JSON into a List<MovieListDisplayModel> using Gson
+            val expectedData = Result.Success(
+                Gson().fromJson(
+                    displayJsonString,
+                    Array<MovieListDisplayModel>::class.java
+                ).toList()
+            )
+            coEvery { movieListUseCase() } returns expectedData
 
-        movieListViewModel.loadMovieList()
+            movieListViewModel.loadMovieList()
 
-        advanceTimeBy(delayTime)
+            advanceTimeBy(delayTime)
 
-        // Assert that the data is updated correctly
-        assertEquals(expectedData, movieListViewModel.movieList.value)
-    }
+            // Assert that the data is updated correctly
+            assertEquals(expectedData, movieListViewModel.movieList.value)
+        }
 
     @Test
-    fun `Movie data error`() = runTest {
-        val expectedData = Result.Error(
-            NetworkException(CommonConstant.UnknownError)
-        )
-        coEvery { movieListUseCase() } returns expectedData
+    fun `given movie data unavailable, when loadMovieList is called, then error displayed`() =
+        runTest {
+            val expectedData = Result.Error(
+                NetworkException(CommonConstant.UnknownError)
+            )
+            coEvery { movieListUseCase() } returns expectedData
 
-        movieListViewModel.loadMovieList()
+            movieListViewModel.loadMovieList()
 
-        advanceTimeBy(delayTime)
+            advanceTimeBy(delayTime)
 
-        // Assert that the data is updated correctly
-        assertEquals(expectedData, movieListViewModel.movieList.value)
-    }
+            // Assert that the data is updated correctly
+            assertEquals(expectedData, movieListViewModel.movieList.value)
+        }
 }

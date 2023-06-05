@@ -8,10 +8,9 @@ import com.movie.domain.reprositorycontract.IMovieRepository
 import com.movie.domain.usecase.MovieDetailsUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
-import junit.framework.TestCase
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.junit.Before
 import org.junit.Test
@@ -20,7 +19,6 @@ import java.nio.file.Paths
 
 class MovieDetailUseCaseTest {
     private lateinit var movieRepository: IMovieRepository
-    private val movieId: Long = 640146
     private lateinit var movieDetailsUseCase: MovieDetailsUseCase
 
     @Before
@@ -29,46 +27,38 @@ class MovieDetailUseCaseTest {
         movieDetailsUseCase = MovieDetailsUseCase(movieRepository)
     }
 
-    @ExperimentalCoroutinesApi
     @Test
-    fun `getMovieDetail should return movie detail`() = runTest {
+    fun `given valid movie detail display response, when invoke is called, then return Success with MovieDetailDisplayModel`() =
+        runBlocking {
+            val jsonString = String(withContext(Dispatchers.IO) {
+                Files.readAllBytes(Paths.get(movieDetailDisplayPath))
+            })
 
-        val jsonFilePath = "src/test/resources/moviedetaildisplay.json"
-        val jsonString = String(withContext(Dispatchers.IO) {
-            Files.readAllBytes(Paths.get(jsonFilePath))
-        })
-
-        val gson = Gson()
-        val expectedJsonResponse = Result.Success(
-            gson.fromJson(jsonString, MovieDetailDisplayModel::class.java)
-        )
-        coEvery { movieRepository.getMovieDetails(movieId) } returns expectedJsonResponse
-
-        // When
-        val result = movieDetailsUseCase.invoke(movieId)
-        // Then
-        TestCase.assertEquals(expectedJsonResponse, result)
-    }
-
-    @ExperimentalCoroutinesApi
-    @Test
-    fun `getMovieDetail returns error on repository failure`() = runTest {
-        // Mock the repository response
-        val errorMessage = "Failed to fetch movie detail"
-        coEvery { movieRepository.getMovieDetails(movieId) } returns Result.Error(
-            DataException(
-                errorMessage
+            val gson = Gson()
+            val expectedJsonResponse = Result.Success(
+                gson.fromJson(jsonString, MovieDetailDisplayModel::class.java)
             )
-        )
+            coEvery { movieRepository.getMovieDetails(movieId) } returns expectedJsonResponse
 
-        // Call the use case method
-        when (val result = movieDetailsUseCase.invoke(movieId)) {
-            is Result.Error -> {
-                TestCase.assertEquals(errorMessage, result.exception.message)
-            }
-
-            else -> {
-            }
+            // When
+            val result = movieDetailsUseCase(movieId)
+            // Then
+            assertEquals(expectedJsonResponse, result)
         }
-    }
+
+    @Test
+    fun `given network error, when invoke is called, then return Error with message`() =
+        runBlocking {
+            // Mock the repository response
+
+            coEvery { movieRepository.getMovieDetails(movieId) } returns Result.Error(
+                DataException(
+                    errorMessage
+                )
+            )
+
+            // Call the use case method
+            val result = movieDetailsUseCase(movieId)
+            assertEquals(errorMessage, (result as Result.Error).exception.message)
+        }
 }

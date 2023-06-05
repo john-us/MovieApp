@@ -9,9 +9,9 @@ import com.movie.domain.usecase.MovieListUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.junit.Before
 import org.junit.Test
@@ -28,47 +28,44 @@ class MovieListUseCaseTest {
         movieListUseCase = MovieListUseCase(movieRepository)
     }
 
-    @ExperimentalCoroutinesApi
+
     @Test
-    fun `execute should return movie list`() = runTest {
-        val gson = Gson()
+    fun `given valid movie list display response, when invoke is called, then return Success with MovieListDisplayModel`() =
+        runBlocking {
+            val gson = Gson()
+            // Read the movie list display JSON from the local file
+            val displayJsonString = String(withContext(Dispatchers.IO) {
+                Files.readAllBytes(Paths.get(movieListDisplayPath))
+            })
 
-        // Read the movie list display JSON from the local file
-        val displayJsonFilePath = "src/test/resources/movielistdisplay.json"
-        val displayJsonString = String(withContext(Dispatchers.IO) {
-            Files.readAllBytes(Paths.get(displayJsonFilePath))
-        })
+            // Parse the JSON into a List<MovieListDisplayModel> using Gson
+            val expectedMovies = Result.Success(
+                gson.fromJson(
+                    displayJsonString,
+                    Array<MovieListDisplayModel>::class.java
+                ).toList()
+            )
+            coEvery { movieRepository.getMovieList() } returns expectedMovies
+            // When
+            val result = movieListUseCase()
 
-        // Parse the JSON into a List<MovieListDisplayModel> using Gson
-        val expectedMovies = Result.Success(
-            gson.fromJson(
-                displayJsonString,
-                Array<MovieListDisplayModel>::class.java
-            ).toList()
-        )
-        coEvery { movieRepository.getMovieList() } returns expectedMovies
-        // When
-        val result = movieListUseCase.invoke()
-
-        // Then
-        assertEquals(expectedMovies, result)
-    }
-
-    @ExperimentalCoroutinesApi
-    @Test
-    fun `getMovieList returns error on repository failure`() = runTest {
-        // Mock the repository response
-        val errorMessage = "Failed to fetch movies"
-        coEvery { movieRepository.getMovieList() } returns Result.Error(DataException(errorMessage))
-
-        // Call the use case method
-        when (val result = movieListUseCase.invoke()) {
-            is Result.Error -> {
-                assertEquals(errorMessage, result.exception.message)
-            }
-
-            else -> {
-            }
+            // Then
+            assertEquals(expectedMovies, result)
         }
-    }
+
+    @Test
+    fun `given network error, when invoke is called, then return Error with message`() =
+        runBlocking {
+            // Mock the repository response
+            coEvery { movieRepository.getMovieList() } returns Result.Error(
+                DataException(
+                    errorMessage
+                )
+            )
+
+            // Call the use case method
+            val result = movieListUseCase()
+            assertTrue(result is Result.Error)
+            assertEquals(errorMessage, (result as Result.Error).exception.message)
+        }
 }

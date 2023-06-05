@@ -31,7 +31,7 @@ class MovieRepositoryImpl @Inject constructor(
                         )
                     }
                         ?: Result.Error(
-                            ApiException(response.code(), response.message())
+                            ApiException(response.code(), response.errorBody()?.toString())
                         )
                 }
             } catch (e: IOException) {
@@ -54,7 +54,7 @@ class MovieRepositoryImpl @Inject constructor(
                         )
                     }
                         ?: Result.Error(
-                            ApiException(response.code(), response.message())
+                            ApiException(response.code(), response.errorBody()?.toString())
                         )
                 }
             } catch (e: IOException) {
