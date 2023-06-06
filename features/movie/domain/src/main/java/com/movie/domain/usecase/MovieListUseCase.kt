@@ -8,7 +8,7 @@ import javax.inject.Inject
 class MovieListUseCase @Inject constructor(
     private val movieRepository: IMovieRepository,
 ) {
-    suspend operator fun invoke(): Result<List<MovieListDisplayModel>> {
-        return movieRepository.getMovieList()
-    }
+    suspend operator fun invoke(): Result<List<MovieListDisplayModel>> =
+        movieRepository.getMovieList()
+
 }

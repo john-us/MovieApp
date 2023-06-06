@@ -9,7 +9,7 @@ data class MovieListModel(
     @SerializedName("total_pages")
     val totalPages: Int? = 0,
     @SerializedName("total_results")
-    val totalResults: Int? = 0
+    val totalResults: Int? = 0,
 ) {
     data class Movie(
         val id: Long,
@@ -17,8 +17,6 @@ data class MovieListModel(
         @SerializedName("backdrop_path")
         val backdropPath: String,
         @SerializedName("release_date")
-        val releaseDate: String
-    ) {
-
-    }
+        val releaseDate: String,
+    )
 }

@@ -36,7 +36,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Composable
 fun MovieDetailScreen(
-    navController: NavController,
     movieId: Long,
 ) {
     val context = LocalContext.current
@@ -51,21 +50,17 @@ fun MovieDetailScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         when (movieDetail) {
-            is Result.Loading -> {
+            is Result.Loading ->
                 CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = R.dimen.space_50)))
-            }
 
-            is Result.Success -> {
+            is Result.Success ->
                 MovieDetailUI(movieDetail = (movieDetail as Result.Success<MovieDetailDisplayModel>).data)
-            }
 
-            is Result.Error -> {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.error_fetching_movie_detail),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+            is Result.Error -> Toast.makeText(
+                context,
+                context.getString(R.string.error_fetching_movie_detail),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 }

@@ -54,20 +54,16 @@ class MovieRepositoryImplTest {
             val jsonString = String(withContext(Dispatchers.IO) {
                 Files.readAllBytes(Paths.get(movieListPath))
             })
-            val gson = Gson()
             val movieListModel =
-                gson.fromJson(jsonString, MovieListModel::class.java)
-            val response = Response.success(movieListModel)
-            coEvery { service.getMovieList() } returns response
+                Gson().fromJson(jsonString, MovieListModel::class.java)
+            coEvery { service.getMovieList() } returns Response.success(movieListModel)
 
             // Mock mapper
-
-
             val displayJsonString = String(withContext(Dispatchers.IO) {
                 Files.readAllBytes(Paths.get(movieListDisplayPath))
             })
             val mappedList = Result.Success(
-                gson.fromJson(
+                Gson().fromJson(
                     displayJsonString,
                     Array<MovieListDisplayModel>::class.java
                 ).toList()
@@ -139,8 +135,7 @@ class MovieRepositoryImplTest {
             val jsonString = String(withContext(Dispatchers.IO) {
                 Files.readAllBytes(Paths.get(movieDetailPath))
             })
-            val gson = Gson()
-            val movieDetailModel = gson.fromJson(jsonString, MovieDetailModel::class.java)
+            val movieDetailModel = Gson().fromJson(jsonString, MovieDetailModel::class.java)
             val response = Response.success(movieDetailModel)
             coEvery { service.getMovieDetails(movieId) } returns response
 
@@ -152,7 +147,7 @@ class MovieRepositoryImplTest {
             })
 
             val mappedDetail = Result.Success(
-                gson.fromJson(displayJsonString, MovieDetailDisplayModel::class.java)
+                Gson().fromJson(displayJsonString, MovieDetailDisplayModel::class.java)
             )
             coEvery { mapper.mapToDisplayModel(movieDetailModel) } returns mappedDetail
 

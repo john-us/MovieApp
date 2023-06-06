@@ -14,16 +14,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
-    private val movieListUseCase: MovieListUseCase
+    private val movieListUseCase: MovieListUseCase,
 ) : ViewModel() {
     private val _moviesList = MutableStateFlow<Result<List<MovieListDisplayModel>>>(Result.Loading)
     val movieList: StateFlow<Result<List<MovieListDisplayModel>>> = _moviesList
 
     fun loadMovieList() {
         viewModelScope.launch {
-            _moviesList.value = Result.Loading
-            val result = movieListUseCase()
-            _moviesList.value = result
+            _moviesList.value = movieListUseCase()
         }
     }
 }

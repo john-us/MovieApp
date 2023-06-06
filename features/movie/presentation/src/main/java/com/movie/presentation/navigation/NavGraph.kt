@@ -22,7 +22,7 @@ fun NavGraph(navController: NavHostController) {
         ) { backStackEntry ->
             val movieId = backStackEntry.arguments?.getLong(movieId)
             movieId?.let {
-                MovieDetailScreen(navController = navController, movieId = it)
+                MovieDetailScreen(movieId = it)
             }
         }
     }

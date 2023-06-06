@@ -32,7 +32,6 @@ class MovieListUseCaseTest {
     @Test
     fun `given valid movie list display response, when invoke is called, then return Success with MovieListDisplayModel`() =
         runBlocking {
-            val gson = Gson()
             // Read the movie list display JSON from the local file
             val displayJsonString = String(withContext(Dispatchers.IO) {
                 Files.readAllBytes(Paths.get(movieListDisplayPath))
@@ -40,7 +39,7 @@ class MovieListUseCaseTest {
 
             // Parse the JSON into a List<MovieListDisplayModel> using Gson
             val expectedMovies = Result.Success(
-                gson.fromJson(
+                Gson().fromJson(
                     displayJsonString,
                     Array<MovieListDisplayModel>::class.java
                 ).toList()
@@ -58,9 +57,7 @@ class MovieListUseCaseTest {
         runBlocking {
             // Mock the repository response
             coEvery { movieRepository.getMovieList() } returns Result.Error(
-                DataException(
-                    errorMessage
-                )
+                DataException(errorMessage)
             )
 
             // Call the use case method

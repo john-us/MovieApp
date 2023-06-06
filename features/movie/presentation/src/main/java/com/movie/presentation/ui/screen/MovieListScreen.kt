@@ -39,7 +39,7 @@ import com.movie.presentation.viewmodel.MovieListViewModel
 
 @Composable
 fun MovieListScreen(
-    navController: NavController
+    navController: NavController,
 ) {
     val context = LocalContext.current
     val viewModel: MovieListViewModel = hiltViewModel()
@@ -51,28 +51,23 @@ fun MovieListScreen(
 
 
     when (movieList) {
-        is Result.Loading -> {
+        is Result.Loading ->
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = R.dimen.space_60)))
             }
-        }
 
-        is Result.Success -> {
-            MovieList(
-                movieList = (movieList as Result.Success<List<MovieListDisplayModel>>).data,
-                onItemClick = { movie ->
-                    navController.navigate("${Screen.MovieDetail.route}/${movie.id}")
-                }
-            )
-        }
+        is Result.Success -> MovieList(
+            movieList = (movieList as Result.Success<List<MovieListDisplayModel>>).data,
+            onItemClick = { movie ->
+                navController.navigate("${Screen.MovieDetail.route}/${movie.id}")
+            }
+        )
 
-        is Result.Error -> {
-            Toast.makeText(
-                context,
-                context.getString(R.string.error_fetching_movie),
-                Toast.LENGTH_LONG
-            ).show()
-        }
+        is Result.Error -> Toast.makeText(
+            context,
+            context.getString(R.string.error_fetching_movie),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
 
@@ -81,7 +76,7 @@ fun MovieListScreen(
 @Composable
 fun MovieList(
     movieList: List<MovieListDisplayModel>,
-    onItemClick: (MovieListDisplayModel) -> Unit
+    onItemClick: (MovieListDisplayModel) -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn {

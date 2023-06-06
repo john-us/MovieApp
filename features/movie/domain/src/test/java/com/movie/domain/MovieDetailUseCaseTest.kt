@@ -34,9 +34,8 @@ class MovieDetailUseCaseTest {
                 Files.readAllBytes(Paths.get(movieDetailDisplayPath))
             })
 
-            val gson = Gson()
             val expectedJsonResponse = Result.Success(
-                gson.fromJson(jsonString, MovieDetailDisplayModel::class.java)
+                Gson().fromJson(jsonString, MovieDetailDisplayModel::class.java)
             )
             coEvery { movieRepository.getMovieDetails(movieId) } returns expectedJsonResponse
 
@@ -52,9 +51,7 @@ class MovieDetailUseCaseTest {
             // Mock the repository response
 
             coEvery { movieRepository.getMovieDetails(movieId) } returns Result.Error(
-                DataException(
-                    errorMessage
-                )
+                DataException(errorMessage)
             )
 
             // Call the use case method

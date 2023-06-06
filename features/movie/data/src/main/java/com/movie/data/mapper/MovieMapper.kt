@@ -9,8 +9,8 @@ import com.movie.domain.model.MovieListDisplayModel
 import javax.inject.Inject
 
 class MovieMapper @Inject constructor() {
-    fun mapToDisplayModel(movieDetailModel: MovieDetailModel): Result<MovieDetailDisplayModel> {
-        return movieDetailModel.let {
+    fun mapToDisplayModel(movieDetailModel: MovieDetailModel): Result<MovieDetailDisplayModel> =
+        movieDetailModel.let {
             Result.Success(
                 MovieDetailDisplayModel(
                     id = it.id,
@@ -22,10 +22,10 @@ class MovieMapper @Inject constructor() {
                 )
             )
         }
-    }
 
-    fun mapToDisplayModel(movieListModel: MovieListModel): Result<List<MovieListDisplayModel>> {
-        return Result.Success(movieListModel.results?.map { movie ->
+
+    fun mapToDisplayModel(movieListModel: MovieListModel): Result<List<MovieListDisplayModel>> =
+        Result.Success(movieListModel.results?.map { movie ->
             movie.let {
                 MovieListDisplayModel(
                     id = it.id,
@@ -35,6 +35,4 @@ class MovieMapper @Inject constructor() {
                 )
             }
         } ?: listOf())
-
-    }
 }
