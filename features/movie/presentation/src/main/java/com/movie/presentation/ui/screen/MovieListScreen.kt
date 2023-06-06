@@ -1,7 +1,6 @@
 package com.movie.presentation.ui.screen
 
 import CustomImage
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,21 +25,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.movie.common.network.Result
 import com.movie.domain.model.MovieListDisplayModel
 import com.movie.presentation.R
+import com.movie.presentation.navigation.Screen
 import com.movie.presentation.viewmodel.MovieListViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Composable
 fun MovieListScreen(
-    viewModel: MovieListViewModel,
-    onItemClick: (MovieListDisplayModel) -> Unit,
-    @ApplicationContext context: Context
+    navController: NavController
 ) {
+    val context = LocalContext.current
+    val viewModel: MovieListViewModel = hiltViewModel()
     val movieList by viewModel.movieList.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -58,7 +60,9 @@ fun MovieListScreen(
         is Result.Success -> {
             MovieList(
                 movieList = (movieList as Result.Success<List<MovieListDisplayModel>>).data,
-                onItemClick
+                onItemClick = { movie ->
+                    navController.navigate("${Screen.MovieDetail.route}/${movie.id}")
+                }
             )
         }
 
@@ -92,8 +96,13 @@ fun MovieList(
 }
 
 @Composable
-fun MovieListItem(movie: MovieListDisplayModel, click: () -> Unit) {
-    Row(modifier = Modifier.padding(all = dimensionResource(id = R.dimen.space_10))) {
+fun MovieListItem(movie: MovieListDisplayModel, onItemClick: (MovieListDisplayModel) -> Unit) {
+    Row(modifier = Modifier
+        .padding(all = dimensionResource(id = R.dimen.space_10))
+        .clickable {
+            // callback for list item click
+            onItemClick(movie)
+        }) {
         CustomImage(
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.space_5)))
@@ -106,11 +115,7 @@ fun MovieListItem(movie: MovieListDisplayModel, click: () -> Unit) {
         )
         Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.space_8)))
 
-        Column(modifier = Modifier
-            .clickable {
-                // callback for list item click
-                click()
-            }) {
+        Column {
             Text(
                 text = movie.title,
                 color = colorResource(id = R.color.black),

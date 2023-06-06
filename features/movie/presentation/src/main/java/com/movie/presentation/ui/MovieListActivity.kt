@@ -1,12 +1,10 @@
 package com.movie.presentation.ui
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.NavHostFragment
-import com.movie.presentation.R
+import androidx.navigation.compose.rememberNavController
+import com.movie.presentation.navigation.NavGraph
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -14,7 +12,10 @@ class MovieListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movielist)
+        setContent {
+            val navController = rememberNavController()
+            NavGraph(navController)
+        }
 
     }
 

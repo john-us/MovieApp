@@ -60,27 +60,20 @@ dependencies {
     debugImplementation rootProject.ext.testDependencies.composeUiTooling
     debugImplementation rootProject.ext.testDependencies.composeUiManifest
     testImplementation rootProject.ext.testDependencies.mockk
-    testImplementation rootProject.ext.testDependencies.coroutinesTest
     testImplementation rootProject.ext.dependencies.gson
-    implementation rootProject.ext.dependencies.appCompat
+    testImplementation rootProject.ext.testDependencies.coroutinesTest
     implementation rootProject.ext.dependencies.material
     implementation rootProject.ext.dependencies.hilt
     kapt rootProject.ext.dependencies.hiltCompiler
-    implementation rootProject.ext.dependencies.lifecycleViewModel
-    implementation rootProject.ext.dependencies.navigation_frag
-    implementation rootProject.ext.dependencies.navigation_ui
     implementation rootProject.ext.dependencies.composeActivity
     implementation platform(rootProject.ext.dependencies.composeBom)
     implementation rootProject.ext.dependencies.composeUi
     implementation rootProject.ext.dependencies.composeGraphics
     implementation rootProject.ext.dependencies.composeUiTooling
     implementation rootProject.ext.dependencies.composeMaterial
-    implementation(platform(rootProject.ext.dependencies.kotlinBom))
-    implementation rootProject.ext.dependencies.navigationFragment
-    implementation rootProject.ext.dependencies.navigationUi
-    implementation rootProject.ext.dependencies.gson
     implementation rootProject.ext.dependencies.coilCompose
     implementation rootProject.ext.dependencies.composeConstraint
+    implementation rootProject.ext.dependencies.hiltCompose
 
     //domain dependency
     implementation project(path: ':features:movie:domain')

@@ -8,7 +8,6 @@ ext {
     composeBom = '2022.10.00'
     composeConstraint = '1.1.0-alpha10'
     composeActivity = '1.7.2'
-    kotlinBom = '1.8.0'
     safeArgs = '2.5.3'
     //App level Version
     app_config = [
@@ -26,15 +25,11 @@ ext {
     gsonVersion = '2.10.1'
     retrofitVersion = '2.9.0'
     hilt = '2.44'
-    appCompat = '1.6.1'
     material = '1.9.0'
-    lifecycleViewModel = '2.6.1'
     lifecycleExtension = '2.2.0'
-    navigationVersion = "2.5.3"
     logInterceptor = "4.9.1"
-    navigationFragment = '2.5.3'
-    navigationUi = '2.5.3'
     coilCompose = '2.4.0'
+    hiltCompose = '1.1.0-alpha01'
 
 
     //Test library version
@@ -49,12 +44,8 @@ ext {
             gson              : "com.google.code.gson:gson:${gsonVersion}",
             hiltCompiler      : "com.google.dagger:hilt-compiler:${hilt}",
             hilt              : "com.google.dagger:hilt-android:${hilt}",
-            appCompat         : "androidx.appcompat:appcompat:${appCompat}",
             material          : "com.google.android.material:material:${material}",
-            lifecycleViewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleViewModel}",
             lifecycleExtension: "androidx.lifecycle:lifecycle-extensions:${lifecycleExtension}",
-            navigation_frag   : "androidx.navigation:navigation-fragment-ktx:${navigationVersion}",
-            navigation_ui     : "androidx.navigation:navigation-ui-ktx:${navigationVersion}",
             logInterceptor    : "com.squareup.okhttp3:logging-interceptor:${logInterceptor}",
             composeBom        : "androidx.compose:compose-bom:${composeBom}",
             composeActivity   : "androidx.activity:activity-compose:${composeActivity}",
@@ -63,12 +54,8 @@ ext {
             composeUiTooling  : "androidx.compose.ui:ui-tooling-preview",
             composeMaterial   : "androidx.compose.material3:material3",
             composeConstraint : "androidx.constraintlayout:constraintlayout-compose:${composeConstraint}",
-            kotlinBom         : "org.jetbrains.kotlin:kotlin-bom:${kotlinBom}",
-            navigationFragment: "androidx.navigation:navigation-fragment-ktx:${navigationFragment}",
-            navigationUi      : "androidx.navigation:navigation-ui-ktx:${navigationUi}",
-            coilCompose       : "io.coil-kt:coil-compose:${coilCompose}"
-
-
+            coilCompose       : "io.coil-kt:coil-compose:${coilCompose}",
+            hiltCompose       : "androidx.hilt:hilt-navigation-compose:${hiltCompose}"
     ]
     testDependencies = [
             junit            : "junit:junit:${junit}",

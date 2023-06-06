@@ -19,11 +19,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.movie.common.network.Result
 import com.movie.domain.model.MovieDetailDisplayModel
 import com.movie.presentation.R
@@ -32,10 +36,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Composable
 fun MovieDetailScreen(
-    viewModel: MovieDetailViewModel,
+    navController: NavController,
     movieId: Long,
-    @ApplicationContext context: Context
 ) {
+    val context = LocalContext.current
+    val viewModel: MovieDetailViewModel = hiltViewModel()
     val movieDetail by viewModel.movieDetail.collectAsState()
     LaunchedEffect(Unit) {
         viewModel.loadMovieDetail(movieId = movieId)
