@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import com.movie.common.network.Result
 import com.movie.domain.model.MovieDetailDisplayModel
 import com.movie.presentation.R
+import com.movie.presentation.ui.common.MovieProgressBar
 import com.movie.presentation.viewmodel.MovieDetailViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 
@@ -52,7 +53,7 @@ fun MovieDetailScreen(
     ) {
         when (movieDetail) {
             is Result.Loading -> {
-                CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = R.dimen.space_50)))
+                MovieProgressBar()
             }
 
             is Result.Success -> {

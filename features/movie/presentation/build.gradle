@@ -69,10 +69,11 @@ dependencies {
     implementation rootProject.ext.dependencies.composeUi
     implementation rootProject.ext.dependencies.composeGraphics
     implementation rootProject.ext.dependencies.composeUiTooling
-    implementation rootProject.ext.dependencies.composeMaterial
+    implementation rootProject.ext.dependencies.composeMaterial3
     implementation rootProject.ext.dependencies.coilCompose
     implementation rootProject.ext.dependencies.composeConstraint
     implementation rootProject.ext.dependencies.hiltCompose
+    implementation rootProject.ext.dependencies.composeMaterial
 
     //domain dependency
     implementation project(path: ':features:movie:domain')

@@ -15,14 +15,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -35,6 +33,7 @@ import com.movie.common.network.Result
 import com.movie.domain.model.MovieListDisplayModel
 import com.movie.presentation.R
 import com.movie.presentation.navigation.Screen
+import com.movie.presentation.ui.common.MovieProgressBar
 import com.movie.presentation.viewmodel.MovieListViewModel
 
 @Composable
@@ -52,9 +51,7 @@ fun MovieListScreen(
 
     when (movieList) {
         is Result.Loading -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = R.dimen.space_60)))
-            }
+            MovieProgressBar()
         }
 
         is Result.Success -> {

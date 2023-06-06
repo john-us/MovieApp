@@ -6,6 +6,8 @@ ext {
     hiltVersion = '2.44'
     //compose library versions
     composeBom = '2022.10.00'
+    composeUi = '1.0.0'
+    composeMaterial = '1.4.3'
     composeConstraint = '1.1.0-alpha10'
     safeArgs = '2.5.3'
     //App level Version
@@ -47,10 +49,11 @@ ext {
             lifecycleExtension: "androidx.lifecycle:lifecycle-extensions:${lifecycleExtension}",
             logInterceptor    : "com.squareup.okhttp3:logging-interceptor:${logInterceptor}",
             composeBom        : "androidx.compose:compose-bom:${composeBom}",
-            composeUi         : "androidx.compose.ui:ui",
+            composeUi         : "androidx.compose.ui:ui:${composeUi}",
             composeGraphics   : "androidx.compose.ui:ui-graphics",
             composeUiTooling  : "androidx.compose.ui:ui-tooling-preview",
-            composeMaterial   : "androidx.compose.material3:material3",
+            composeMaterial3  : "androidx.compose.material3:material3",
+            composeMaterial   : "androidx.compose.material:material:${composeMaterial}",
             composeConstraint : "androidx.constraintlayout:constraintlayout-compose:${composeConstraint}",
             coilCompose       : "io.coil-kt:coil-compose:${coilCompose}",
             hiltCompose       : "androidx.hilt:hilt-navigation-compose:${hiltCompose}"
