@@ -7,7 +7,6 @@ ext {
     //compose library versions
     composeBom = '2022.10.00'
     composeConstraint = '1.1.0-alpha10'
-    composeActivity = '1.7.2'
     safeArgs = '2.5.3'
     //App level Version
     app_config = [
@@ -48,7 +47,6 @@ ext {
             lifecycleExtension: "androidx.lifecycle:lifecycle-extensions:${lifecycleExtension}",
             logInterceptor    : "com.squareup.okhttp3:logging-interceptor:${logInterceptor}",
             composeBom        : "androidx.compose:compose-bom:${composeBom}",
-            composeActivity   : "androidx.activity:activity-compose:${composeActivity}",
             composeUi         : "androidx.compose.ui:ui",
             composeGraphics   : "androidx.compose.ui:ui-graphics",
             composeUiTooling  : "androidx.compose.ui:ui-tooling-preview",

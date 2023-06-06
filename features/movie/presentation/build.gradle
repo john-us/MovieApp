@@ -65,7 +65,6 @@ dependencies {
     implementation rootProject.ext.dependencies.material
     implementation rootProject.ext.dependencies.hilt
     kapt rootProject.ext.dependencies.hiltCompiler
-    implementation rootProject.ext.dependencies.composeActivity
     implementation platform(rootProject.ext.dependencies.composeBom)
     implementation rootProject.ext.dependencies.composeUi
     implementation rootProject.ext.dependencies.composeGraphics
