@@ -19,23 +19,17 @@ class MovieApplication : Application(), LifecycleEventObserver {
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
         when (event) {
 
-            Lifecycle.Event.ON_START -> {
-                AppLogger.writeLog(
-                    AppLogger.LogLevel.DEBUG,
-                    this.tag(),
-                    getString(R.string.app_in_fg)
-                )
+            Lifecycle.Event.ON_START -> AppLogger.writeLog(
+                AppLogger.LogLevel.DEBUG,
+                this.tag(),
+                getString(R.string.app_in_fg)
+            )
 
-            }
-
-            Lifecycle.Event.ON_STOP -> {
-                AppLogger.writeLog(
-                    AppLogger.LogLevel.DEBUG,
-                    this.tag(),
-                    getString(R.string.app_in_bg)
-                )
-
-            }
+            Lifecycle.Event.ON_STOP -> AppLogger.writeLog(
+                AppLogger.LogLevel.DEBUG,
+                this.tag(),
+                getString(R.string.app_in_bg)
+            )
 
             else -> {
                 //do nothing

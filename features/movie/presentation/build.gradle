@@ -62,6 +62,7 @@ dependencies {
     testImplementation rootProject.ext.testDependencies.mockk
     testImplementation rootProject.ext.dependencies.gson
     testImplementation rootProject.ext.testDependencies.coroutinesTest
+
     implementation rootProject.ext.dependencies.material
     implementation rootProject.ext.dependencies.hilt
     kapt rootProject.ext.dependencies.hiltCompiler

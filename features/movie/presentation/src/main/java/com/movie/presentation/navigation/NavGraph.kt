@@ -30,8 +30,7 @@ fun NavGraph(navController: NavHostController) {
                     title = movieDetail,
                     showBackButton = true,
                     onBackClicked = { navController.popBackStack() },
-                    content = { MovieDetailScreen(navController = navController, movieId = it) })
-
+                    content = { MovieDetailScreen(movieId = it) })
 
             }
         }

@@ -1,4 +1,4 @@
-package com.movie.presentation.ui.common
+package com.movie.presentation.ui.customcomposable
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +13,6 @@ import com.movie.presentation.R
 @Composable
 fun MovieProgressBar() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = R.dimen.space_60)))
+        CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = R.dimen.space_50)))
     }
 }

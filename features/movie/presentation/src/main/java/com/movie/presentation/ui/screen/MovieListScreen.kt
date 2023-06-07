@@ -15,8 +15,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -24,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,13 +29,15 @@ import androidx.navigation.NavController
 import com.movie.common.network.Result
 import com.movie.domain.model.MovieListDisplayModel
 import com.movie.presentation.R
+import com.movie.presentation.constant.FontSize
 import com.movie.presentation.navigation.Screen
-import com.movie.presentation.ui.common.MovieProgressBar
+import com.movie.presentation.ui.customcomposable.MovieProgressBar
+import com.movie.presentation.ui.customcomposable.MovieText
 import com.movie.presentation.viewmodel.MovieListViewModel
 
 @Composable
 fun MovieListScreen(
-    navController: NavController
+    navController: NavController,
 ) {
     val context = LocalContext.current
     val viewModel: MovieListViewModel = hiltViewModel()
@@ -50,26 +49,20 @@ fun MovieListScreen(
 
 
     when (movieList) {
-        is Result.Loading -> {
-            MovieProgressBar()
-        }
+        is Result.Loading -> MovieProgressBar()
 
-        is Result.Success -> {
-            MovieList(
-                movieList = (movieList as Result.Success<List<MovieListDisplayModel>>).data,
-                onItemClick = { movie ->
-                    navController.navigate("${Screen.MovieDetail.route}/${movie.id}")
-                }
-            )
-        }
+        is Result.Success -> MovieList(
+            movieList = (movieList as Result.Success<List<MovieListDisplayModel>>).data,
+            onItemClick = { movie ->
+                navController.navigate("${Screen.MovieDetail.route}/${movie.id}")
+            }
+        )
 
-        is Result.Error -> {
-            Toast.makeText(
-                context,
-                context.getString(R.string.error_fetching_movie),
-                Toast.LENGTH_LONG
-            ).show()
-        }
+        is Result.Error -> Toast.makeText(
+            context,
+            context.getString(R.string.error_fetching_movie),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
 
@@ -78,7 +71,7 @@ fun MovieListScreen(
 @Composable
 fun MovieList(
     movieList: List<MovieListDisplayModel>,
-    onItemClick: (MovieListDisplayModel) -> Unit
+    onItemClick: (MovieListDisplayModel) -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
@@ -113,16 +106,12 @@ fun MovieListItem(movie: MovieListDisplayModel, onItemClick: (MovieListDisplayMo
         Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.space_8)))
 
         Column {
-            Text(
+            MovieText(
                 text = movie.title,
-                color = colorResource(id = R.color.black),
-                style = MaterialTheme.typography.bodyLarge
+                fontSize = FontSize.fontSize_16
             )
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.space_8)))
-            Text(
-                text = movie.releaseDate,
-                style = MaterialTheme.typography.bodyMedium
-            )
+            MovieText(text = movie.releaseDate)
 
 
         }
