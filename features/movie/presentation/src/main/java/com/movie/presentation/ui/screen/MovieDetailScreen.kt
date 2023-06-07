@@ -1,7 +1,6 @@
 package com.movie.presentation.ui.screen
 
 import CustomImage
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,10 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -22,17 +17,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.movie.common.network.Result
 import com.movie.domain.model.MovieDetailDisplayModel
 import com.movie.presentation.R
+import com.movie.presentation.constant.FontSize
+import com.movie.presentation.ui.customcomposable.MovieProgressBar
+import com.movie.presentation.ui.customcomposable.MovieText
 import com.movie.presentation.viewmodel.MovieDetailViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Composable
 fun MovieDetailScreen(
@@ -50,8 +44,7 @@ fun MovieDetailScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         when (movieDetail) {
-            is Result.Loading ->
-                CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = R.dimen.space_50)))
+            is Result.Loading -> MovieProgressBar()
 
             is Result.Success ->
                 MovieDetailUI(movieDetail = (movieDetail as Result.Success<MovieDetailDisplayModel>).data)
@@ -86,11 +79,9 @@ fun MovieDetailUI(movieDetail: MovieDetailDisplayModel) {
                     end.linkTo(parent.end)
                 }
         )
-        val space15 = dimensionResource(R.dimen.space_15)
 
-        Text(text = stringResource(id = R.string.title),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
+        val space15 = dimensionResource(R.dimen.space_15)
+        MovieText(text = stringResource(id = R.string.title),
             modifier = Modifier
                 .constrainAs(titleLabel) {
                     top.linkTo(
@@ -101,35 +92,31 @@ fun MovieDetailUI(movieDetail: MovieDetailDisplayModel) {
                 .padding(
                     start = dimensionResource(id = R.dimen.space_15),
                     end = dimensionResource(id = R.dimen.space_5)
-                )
+                ), fontSize = FontSize.fontSize_16)
 
-        )
         val space10 = dimensionResource(R.dimen.space_10)
-        Text(text = movieDetail.title,
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier
-                .constrainAs(title) {
-                    top.linkTo(
-                        image.bottom,
-                        margin = space15
-                    )
-                    start.linkTo(
-                        titleLabel.end
-                    )
-                    end.linkTo(
-                        parent.end,
-                        margin = space10
-                    )
-                    width = Dimension.fillToConstraints
+        MovieText(text = movieDetail.title, modifier = Modifier
+            .constrainAs(title) {
+                top.linkTo(
+                    image.bottom,
+                    margin = space15
+                )
+                start.linkTo(
+                    titleLabel.end
+                )
+                end.linkTo(
+                    parent.end,
+                    margin = space10
+                )
+                bottom.linkTo(
+                    titleLabel.bottom
+                )
+                width = Dimension.fillToConstraints
 
-                }
+            })
 
-
-        )
-
-        Text(text = stringResource(id = R.string.release_date),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
+        MovieText(
+            text = stringResource(id = R.string.release_date),
             modifier = Modifier
                 .constrainAs(releaseDateLabel) {
                     top.linkTo(
@@ -140,11 +127,12 @@ fun MovieDetailUI(movieDetail: MovieDetailDisplayModel) {
                 .padding(
                     start = dimensionResource(id = R.dimen.space_15),
                     end = dimensionResource(id = R.dimen.space_5)
-                )
-
+                ),
+            fontSize = FontSize.fontSize_16,
         )
-        Text(text = movieDetail.releaseDate,
-            style = MaterialTheme.typography.titleMedium,
+
+        MovieText(
+            text = movieDetail.releaseDate,
             modifier = Modifier
                 .constrainAs(releaseDate) {
                     top.linkTo(
@@ -154,9 +142,10 @@ fun MovieDetailUI(movieDetail: MovieDetailDisplayModel) {
                     start.linkTo(
                         releaseDateLabel.end
                     )
-                }
-
-
+                    bottom.linkTo(
+                        releaseDateLabel.bottom
+                    )
+                },
         )
 
     }
