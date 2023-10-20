@@ -11,57 +11,43 @@ import com.movie.domain.model.MovieListDisplayModel
 import com.movie.domain.reprositorycontract.IMovieRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import okio.IOException
+import retrofit2.Response
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val service: MovieAPIService,
     private val dispatcher: CoroutineDispatcher,
-    private val mapper: MovieMapper
+    private val mapper: MovieMapper,
 ) : IMovieRepository {
+
     override suspend fun getMovieList(): Result<List<MovieListDisplayModel>> {
         return withContext(dispatcher) {
-            try {
-                val response = service.getMovieList()
-                if (response.isSuccessful) {
-                    val movieListModel = response.body()
-                    return@withContext movieListModel?.let {
-                        mapper.mapToDisplayModel(
-                            movieListModel
-                        )
-                    }
-                        ?: Result.Error(
-                            ApiException(response.code(), response.errorBody()?.toString())
-                        )
-                }
-            } catch (e: IOException) {
-                return@withContext Result.Error(NetworkException(e.message))
-            }
-            return@withContext Result.Error(DataException(CommonConstant.UnknownError))
+            fetchApiData({service.getMovieList()}, mapper::mapToDisplayModel)
         }
-
     }
 
     override suspend fun getMovieDetails(movieId: Long): Result<MovieDetailDisplayModel> {
         return withContext(dispatcher) {
-            try {
-                val response = service.getMovieDetails(movieId)
-                if (response.isSuccessful) {
-                    val movieDetailModel = response.body()
-                    return@withContext movieDetailModel?.let {
-                        mapper.mapToDisplayModel(
-                            movieDetailModel
-                        )
-                    }
-                        ?: Result.Error(
-                            ApiException(response.code(), response.errorBody()?.toString())
-                        )
-                }
-            } catch (e: IOException) {
-                return@withContext Result.Error(NetworkException(e.message))
-            }
-            return@withContext Result.Error(DataException(CommonConstant.UnknownError))
+            fetchApiData({ service.getMovieDetails(movieId) }, mapper::mapToDisplayModel)
         }
     }
 
+    private suspend fun <T, R> fetchApiData(
+        response: suspend () -> Response<T>,
+        mapper: (T) -> Result<R>
+    ): Result<R> {
+        return try {
+            val result = response()
+            if (result.isSuccessful) {
+                mapper(result.body()!!)
+            } else {
+                Result.Error(ApiException(result.code(), result.errorBody()?.toString()))
+            }
+        } catch (e: Exception) {
+            when (e) {
+                is ApiException, is NetworkException -> Result.Error(e)
+                else -> Result.Error(DataException(CommonConstant.UnknownError))
+            }
+        }
+    }
 }
