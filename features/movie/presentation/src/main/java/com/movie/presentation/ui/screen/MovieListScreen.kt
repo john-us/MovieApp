@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.movie.common.network.Result
@@ -116,4 +117,16 @@ fun MovieListItem(movie: MovieListDisplayModel, onItemClick: (MovieListDisplayMo
 
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MovieListItemPreview() {
+    val displayModel = MovieListDisplayModel(
+        id = 872585,
+        title = "Oppenheimer",
+        backdropPath = "https://image.tmdb.org/t/p/original//fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg",
+        releaseDate = "2023-07-19"
+    )
+    MovieListItem(movie = displayModel, onItemClick = { })
 }

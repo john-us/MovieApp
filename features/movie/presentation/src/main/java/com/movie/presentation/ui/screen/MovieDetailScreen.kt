@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -148,5 +150,21 @@ fun MovieDetailUI(movieDetail: MovieDetailDisplayModel) {
                 },
         )
 
+    }
+}
+
+@Preview
+@Composable
+fun MovieDetailScreenPreview() {
+    val displayModel = MovieDetailDisplayModel(
+        backdropPath = "https://image.tmdb.org/t/p/original//4XM8DUTQb3lhLemJC51Jx4a2EuA.jpg",
+        id = 385687,
+        originalTitle = "Fast X",
+        releaseDate = "2023-05-17",
+        status = "Released",
+        title = "Fast X"
+    )
+    MaterialTheme {
+        MovieDetailUI(displayModel)
     }
 }
