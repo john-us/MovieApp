@@ -56,8 +56,4 @@ android {
 dependencies {
     implementation rootProject.ext.dependencies.hilt
     kapt rootProject.ext.dependencies.hiltCompiler
-    implementation rootProject.ext.dependencies.retrofit
-    implementation rootProject.ext.dependencies.retrofitConverter
-    implementation rootProject.ext.dependencies.logInterceptor
-    implementation rootProject.ext.dependencies.gson
 }

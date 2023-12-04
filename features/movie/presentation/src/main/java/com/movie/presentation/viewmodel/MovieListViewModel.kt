@@ -3,7 +3,7 @@ package com.movie.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.movie.common.network.Result
+import com.movie.common.baseresponse.Result
 import com.movie.domain.model.MovieListDisplayModel
 import com.movie.domain.usecase.MovieListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

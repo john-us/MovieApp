@@ -65,6 +65,8 @@ dependencies {
     implementation rootProject.ext.dependencies.retrofitConverter
     //common module
     implementation project(path: ':common')
+    //common module
+    implementation project(path: ':network')
     //domain module
     implementation project(path: ':features:movie:domain')
 }

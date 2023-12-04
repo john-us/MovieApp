@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.movie.common.network.Result
+import com.movie.common.baseresponse.Result
 import com.movie.domain.model.MovieDetailDisplayModel
 import com.movie.presentation.R
 import com.movie.presentation.constant.FontSize

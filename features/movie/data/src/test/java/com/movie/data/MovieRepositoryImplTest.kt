@@ -2,11 +2,11 @@ package com.movie.data
 
 import com.google.gson.Gson
 import com.movie.common.constant.CommonConstant
-import com.movie.common.network.ApiException
-import com.movie.common.network.DataException
-import com.movie.common.network.NetworkException
-import com.movie.common.network.Result
-import com.movie.common.network.Result.Error
+import com.movie.common.apiexception.ApiException
+import com.movie.common.apiexception.DataException
+import com.movie.common.apiexception.NetworkException
+import com.movie.common.baseresponse.Result
+import com.movie.common.baseresponse.Result.Error
 import com.movie.data.mapper.MovieMapper
 import com.movie.data.model.MovieDetailModel
 import com.movie.data.model.MovieListModel

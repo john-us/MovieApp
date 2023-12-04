@@ -1,48 +1,45 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
 }
-apply from: '../dependencies.gradle'
+apply from: rootProject.file('dependencies.gradle')
 android {
-    namespace rootProject.ext.app_config.applicationId
+    ext {
+        nameSpace = 'com.movie.network'
+    }
+    namespace "$nameSpace"
     compileSdk rootProject.ext.app_config.compileSdkVersion
 
     defaultConfig {
-        applicationId rootProject.ext.app_config.applicationId
         minSdk rootProject.ext.app_config.minSdkVersion
         targetSdk rootProject.ext.app_config.targetSdkVersion
-        versionCode rootProject.ext.app_config.versionCode
-        versionName rootProject.ext.app_config.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
             minifyEnabled false
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
         }
     }
-
-
     flavorDimensions "environment"
     productFlavors {
         dev {
             dimension "environment"
-            applicationId "com.movieapp.dev"
-            buildConfigField "String", "BASE_URL", '"https://api.themoviedb.org/3/"'
+            buildConfigField("String", "BASE_URL", BASE_URL)
         }
 
         prod {
             dimension "environment"
-            applicationId "com.movieapp"
-            buildConfigField "String", "BASE_URL", '"https://api.themoviedb.org/3/"'
+            buildConfigField("String", "BASE_URL", BASE_URL)
         }
     }
     compileOptions {
@@ -58,21 +55,11 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':common')
     implementation rootProject.ext.dependencies.hilt
     kapt rootProject.ext.dependencies.hiltCompiler
-    implementation rootProject.ext.dependencies.lifecycleExtension
-
-    //common module
-    implementation project(path: ':common')
-    //presentation module
-    implementation project(path: ':features:movie:presentation')
-    //data module
-    implementation project(path: ':features:movie:data')
-    //domain module
-    implementation project(path: ':features:movie:domain')
-    implementation project(path: ':network')
-}
-// Allow references to generated code
-kapt {
-    correctErrorTypes true
+    implementation rootProject.ext.dependencies.retrofit
+    implementation rootProject.ext.dependencies.retrofitConverter
+    implementation rootProject.ext.dependencies.logInterceptor
+    implementation rootProject.ext.dependencies.gson
 }

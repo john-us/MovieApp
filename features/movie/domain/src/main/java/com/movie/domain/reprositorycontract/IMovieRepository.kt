@@ -1,6 +1,6 @@
 package com.movie.domain.reprositorycontract
 
-import com.movie.common.network.Result
+import com.movie.common.baseresponse.Result
 import com.movie.domain.model.MovieDetailDisplayModel
 import com.movie.domain.model.MovieListDisplayModel
 

@@ -27,7 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.movie.common.network.Result
+import com.movie.common.baseresponse.Result
 import com.movie.domain.model.MovieListDisplayModel
 import com.movie.presentation.R
 import com.movie.presentation.constant.FontSize

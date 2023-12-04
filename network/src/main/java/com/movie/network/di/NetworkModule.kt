@@ -1,7 +1,8 @@
-package com.movie.common.network
+package com.movie.network.di
 
 import com.google.gson.GsonBuilder
 import com.movie.common.BuildConfig
+import com.movie.network.interceptor.LocalJsonInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,12 +28,16 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttpClient(
+        interceptor: HttpLoggingInterceptor,
+        localJsonInterceptor: LocalJsonInterceptor,
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(interceptor)
+            .addInterceptor(localJsonInterceptor)
             .build()
     }
 

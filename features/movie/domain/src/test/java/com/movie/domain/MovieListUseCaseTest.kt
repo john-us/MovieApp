@@ -1,8 +1,8 @@
 package com.movie.domain
 
 import com.google.gson.Gson
-import com.movie.common.network.DataException
-import com.movie.common.network.Result
+import com.movie.common.apiexception.DataException
+import com.movie.common.baseresponse.Result
 import com.movie.domain.model.MovieListDisplayModel
 import com.movie.domain.reprositorycontract.IMovieRepository
 import com.movie.domain.usecase.MovieListUseCase

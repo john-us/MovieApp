@@ -1,4 +1,4 @@
-package com.movie.common.network
+package com.movie.common.apiexception
 
 class ApiException(val code: Int, message: String?) : Exception(message)
 class NetworkException(message: String?) : Exception(message)

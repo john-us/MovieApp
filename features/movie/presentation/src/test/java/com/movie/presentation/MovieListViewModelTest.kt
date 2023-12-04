@@ -2,8 +2,8 @@ package com.movie.presentation
 
 import com.google.gson.Gson
 import com.movie.common.constant.CommonConstant
-import com.movie.common.network.NetworkException
-import com.movie.common.network.Result
+import com.movie.common.apiexception.NetworkException
+import com.movie.common.baseresponse.Result
 import com.movie.domain.model.MovieListDisplayModel
 import com.movie.domain.usecase.MovieListUseCase
 import com.movie.presentation.viewmodel.MovieListViewModel

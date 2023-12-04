@@ -1,6 +1,6 @@
 package com.movie.domain.usecase
 
-import com.movie.common.network.Result
+import com.movie.common.baseresponse.Result
 import com.movie.domain.model.MovieListDisplayModel
 import com.movie.domain.reprositorycontract.IMovieRepository
 import javax.inject.Inject
