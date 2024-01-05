@@ -1,9 +1,9 @@
 package com.movie.presentation
 
 import com.google.gson.Gson
-import com.movie.common.constant.CommonConstant
 import com.movie.common.apiexception.NetworkException
 import com.movie.common.baseresponse.Result
+import com.movie.common.constant.NetworkConstant
 import com.movie.domain.model.MovieListDisplayModel
 import com.movie.domain.usecase.MovieListUseCase
 import com.movie.presentation.viewmodel.MovieListViewModel
@@ -12,7 +12,6 @@ import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.resetMain
@@ -41,7 +40,7 @@ class MovieListViewModelTest {
     @After
     fun tearDown() {
         Dispatchers.resetMain()
-        testDispatcher.cancel()
+        //testDispatcher.cancel()
     }
 
     @Test
@@ -73,7 +72,7 @@ class MovieListViewModelTest {
     fun `given movie data unavailable, when loadMovieList is called, then error displayed`() =
         runTest {
             val expectedData = Result.Error(
-                NetworkException(CommonConstant.UnknownError)
+                NetworkException(NetworkConstant.UNKNOWN_ERROR)
             )
             coEvery { movieListUseCase() } returns expectedData
 
