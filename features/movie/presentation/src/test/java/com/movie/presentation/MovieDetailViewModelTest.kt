@@ -1,9 +1,9 @@
 package com.movie.presentation
 
 import com.google.gson.Gson
-import com.movie.common.constant.CommonConstant
 import com.movie.common.apiexception.NetworkException
 import com.movie.common.baseresponse.Result
+import com.movie.common.constant.NetworkConstant
 import com.movie.domain.model.MovieDetailDisplayModel
 import com.movie.domain.usecase.MovieDetailsUseCase
 import com.movie.presentation.viewmodel.MovieDetailViewModel
@@ -28,13 +28,13 @@ import java.nio.file.Paths
 @ExperimentalCoroutinesApi
 class MovieDetailViewModelTest {
     private lateinit var movieDetailViewModel: MovieDetailViewModel
-    private val testDispatcher = StandardTestDispatcher()
+    //private val testDispatcher = StandardTestDispatcher()
     private lateinit var movieDetailsUseCase: MovieDetailsUseCase
 
 
     @Before
     fun setup() {
-        Dispatchers.setMain(testDispatcher)
+        Dispatchers.setMain(Dispatchers.Unconfined)
         movieDetailsUseCase = mockk()
         movieDetailViewModel = MovieDetailViewModel(movieDetailsUseCase)
     }
@@ -43,7 +43,7 @@ class MovieDetailViewModelTest {
     @After
     fun tearDown() {
         Dispatchers.resetMain()
-        testDispatcher.cancel()
+        //testDispatcher.cancel()
     }
 
 
@@ -72,7 +72,7 @@ class MovieDetailViewModelTest {
     fun `given movie data unavailable, when loadMovieDetail is called, then error displayed`() =
         runTest {
             val expectedData = Result.Error(
-                NetworkException(CommonConstant.UnknownError)
+                NetworkException(NetworkConstant.UNKNOWN_ERROR)
             )
             coEvery { movieDetailsUseCase(movieId) } returns expectedData
 
