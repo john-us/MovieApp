@@ -3,7 +3,6 @@ package com.movie.presentation
 import androidx.compose.material.MaterialTheme
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
-import com.android.ide.common.rendering.api.SessionParams
 import com.movie.domain.model.MovieDetailDisplayModel
 import com.movie.presentation.ui.screen.MovieDetailUI
 import kotlinx.coroutines.Dispatchers
@@ -23,8 +22,6 @@ class MovieDetailScreenShotTest {
     @get:Rule
     val paparazzi = Paparazzi(
         deviceConfig = DeviceConfig.PIXEL_5,
-        renderingMode = SessionParams.RenderingMode.NORMAL,
-        showSystemUi = false,
         maxPercentDifference = 1.0,
     )
 
