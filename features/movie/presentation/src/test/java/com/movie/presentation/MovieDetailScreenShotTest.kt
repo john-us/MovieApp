@@ -1,10 +1,11 @@
 package com.movie.presentation
 
+import androidx.compose.material.MaterialTheme
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import com.android.ide.common.rendering.api.SessionParams
-import com.movie.domain.model.MovieListDisplayModel
-import com.movie.presentation.ui.screen.MovieListItem
+import com.movie.domain.model.MovieDetailDisplayModel
+import com.movie.presentation.ui.screen.MovieDetailUI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -16,7 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class MovieListScreenScreenshotTest {
+class MovieDetailScreenShotTest {
     private val testDispatcher = StandardTestDispatcher()
 
     @get:Rule
@@ -40,15 +41,19 @@ class MovieListScreenScreenshotTest {
     }
 
     @Test
-    fun launchMovieListScreen() {
+    fun launchMovieDetailScreen() {
         paparazzi.snapshot {
-            val displayModel = MovieListDisplayModel(
-                id = 872585,
-                title = "Oppenheimer",
-                backdropPath = "https://image.tmdb.org/t/p/original//fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg",
-                releaseDate = "2023-07-19"
+            val displayModel = MovieDetailDisplayModel(
+                backdropPath = "https://image.tmdb.org/t/p/original//4XM8DUTQb3lhLemJC51Jx4a2EuA.jpg",
+                id = 385687,
+                originalTitle = "Fast X",
+                releaseDate = "2023-05-17",
+                status = "Released",
+                title = "Fast X"
             )
-            MovieListItem(movie = displayModel, onItemClick = {})
+            MaterialTheme {
+                MovieDetailUI(displayModel)
+            }
         }
     }
 }
