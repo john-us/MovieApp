@@ -4,8 +4,9 @@ import com.google.gson.Gson
 import com.movie.common.apiexception.NetworkException
 import com.movie.common.baseresponse.Result
 import com.movie.common.constant.NetworkConstant
-import com.movie.domain.model.MovieDetailDisplayModel
 import com.movie.domain.usecase.MovieDetailsUseCase
+import com.movie.presentation.mapper.MovieDisplayMapper
+import com.movie.presentation.model.MovieDetailDisplayModel
 import com.movie.presentation.viewmodel.MovieDetailViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -29,13 +30,15 @@ class MovieDetailViewModelTest {
     private lateinit var movieDetailViewModel: MovieDetailViewModel
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var movieDetailsUseCase: MovieDetailsUseCase
+    private lateinit var movieDisplayMapper: MovieDisplayMapper
 
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
+        movieDisplayMapper = mockk()
         movieDetailsUseCase = mockk()
-        movieDetailViewModel = MovieDetailViewModel(movieDetailsUseCase)
+        movieDetailViewModel = MovieDetailViewModel(movieDetailsUseCase, movieDisplayMapper)
     }
 
 
@@ -56,7 +59,7 @@ class MovieDetailViewModelTest {
             val expectedData = Result.Success(
                 Gson().fromJson(jsonString, MovieDetailDisplayModel::class.java)
             )
-            coEvery { movieDetailsUseCase(movieId) } returns expectedData
+            coEvery { movieDisplayMapper.mapToDetailDisplayModel(movieDetailsUseCase(movieId)) } returns expectedData
 
             movieDetailViewModel.loadMovieDetail(movieId)
 
@@ -73,7 +76,7 @@ class MovieDetailViewModelTest {
             val expectedData = Result.Error(
                 NetworkException(NetworkConstant.UNKNOWN_ERROR)
             )
-            coEvery { movieDetailsUseCase(movieId) } returns expectedData
+            coEvery { movieDisplayMapper.mapToDetailDisplayModel(movieDetailsUseCase(movieId)) } returns expectedData
 
             movieDetailViewModel.loadMovieDetail(movieId)
 

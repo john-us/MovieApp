@@ -1,19 +1,19 @@
 package com.movie.data
 
 import com.google.gson.Gson
-import com.movie.common.constant.CommonConstant
 import com.movie.common.apiexception.ApiException
 import com.movie.common.apiexception.DataException
 import com.movie.common.apiexception.NetworkException
 import com.movie.common.baseresponse.Result
 import com.movie.common.baseresponse.Result.Error
+import com.movie.common.constant.NetworkConstant
 import com.movie.data.mapper.MovieMapper
 import com.movie.data.model.MovieDetailModel
 import com.movie.data.model.MovieListModel
 import com.movie.data.repository.MovieAPIService
 import com.movie.data.repository.MovieRepositoryImpl
-import com.movie.domain.model.MovieDetailDisplayModel
-import com.movie.domain.model.MovieListDisplayModel
+import com.movie.domain.model.MovieDetailDomainModel
+import com.movie.domain.model.MovieListDomainModel
 import com.movie.domain.reprositorycontract.IMovieRepository
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -65,10 +65,10 @@ class MovieRepositoryImplTest {
             val mappedList = Result.Success(
                 Gson().fromJson(
                     displayJsonString,
-                    Array<MovieListDisplayModel>::class.java
+                    Array<MovieListDomainModel>::class.java
                 ).toList()
             )
-            coEvery { mapper.mapToDisplayModel(movieListModel) } returns mappedList
+            coEvery { mapper.mapToDomainModel(movieListModel) } returns mappedList
 
             // Call the method
             val result = repository.getMovieList()
@@ -97,7 +97,7 @@ class MovieRepositoryImplTest {
     fun `given unknown error, when getMovieList is called, then return Error with DataException`() =
         runBlocking {
             // Mock API service response
-            val errorBody = CommonConstant.UnknownError.toResponseBody(null)
+            val errorBody = NetworkConstant.UNKNOWN_ERROR.toResponseBody(null)
             val response = Response.error<MovieListModel>(errorCode, errorBody)
             coEvery { service.getMovieList() } returns response
 
@@ -108,7 +108,7 @@ class MovieRepositoryImplTest {
             assertTrue(result is Error)
             assertTrue((result as Error).exception is DataException)
             assertEquals(errorCode, response.code())
-            assertEquals(CommonConstant.UnknownError, result.exception.message)
+            assertEquals(NetworkConstant.UNKNOWN_ERROR, result.exception.message)
         }
 
     @Test
@@ -147,9 +147,9 @@ class MovieRepositoryImplTest {
             })
 
             val mappedDetail = Result.Success(
-                Gson().fromJson(displayJsonString, MovieDetailDisplayModel::class.java)
+                Gson().fromJson(displayJsonString, MovieDetailDomainModel::class.java)
             )
-            coEvery { mapper.mapToDisplayModel(movieDetailModel) } returns mappedDetail
+            coEvery { mapper.mapToDomainModel(movieDetailModel) } returns mappedDetail
 
             // Call the method
             val result = repository.getMovieDetails(movieId)
@@ -178,7 +178,7 @@ class MovieRepositoryImplTest {
     fun `given unknown error, when getMovieDetails is called, then return Error with DataException`() =
         runBlocking {
             // Mock API service response
-            val errorBody = CommonConstant.UnknownError.toResponseBody(null)
+            val errorBody = NetworkConstant.UNKNOWN_ERROR.toResponseBody(null)
             val response = Response.error<MovieDetailModel>(errorCode, errorBody)
             coEvery { service.getMovieDetails(movieId) } returns response
 
@@ -189,7 +189,7 @@ class MovieRepositoryImplTest {
             assertTrue(result is Error)
             assertTrue((result as Error).exception is DataException)
             assertEquals(errorCode, response.code())
-            assertEquals(CommonConstant.UnknownError, result.exception.message)
+            assertEquals(NetworkConstant.UNKNOWN_ERROR, result.exception.message)
         }
 
     @Test

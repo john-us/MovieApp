@@ -1,7 +1,9 @@
 package com.movie.presentation.ui.screen
 
 import CustomImage
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -31,14 +33,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.movie.common.baseresponse.Result
-import com.movie.domain.model.MovieListDisplayModel
 import com.movie.presentation.R
 import com.movie.presentation.constant.FontSize
+import com.movie.presentation.model.MovieListDisplayModel
 import com.movie.presentation.navigation.Screen
 import com.movie.presentation.ui.customcomposable.MovieProgressBar
 import com.movie.presentation.ui.customcomposable.MovieText
 import com.movie.presentation.viewmodel.MovieListViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MovieListScreen(
     navController: NavController,

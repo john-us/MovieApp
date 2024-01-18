@@ -1,4 +1,4 @@
-package com.movie.domain.model
+package com.movie.presentation.model
 
 data class MovieDetailDisplayModel(
     val backdropPath: String,
@@ -6,5 +6,5 @@ data class MovieDetailDisplayModel(
     val originalTitle: String,
     val releaseDate: String,
     val status: String,
-    val title: String
+    val title: String,
 )

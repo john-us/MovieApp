@@ -2,7 +2,7 @@ package com.movie.presentation
 
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
-import com.movie.domain.model.MovieListDisplayModel
+import com.movie.presentation.model.MovieListDisplayModel
 import com.movie.presentation.ui.screen.MovieListItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

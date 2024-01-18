@@ -3,7 +3,7 @@ package com.movie.domain
 import com.google.gson.Gson
 import com.movie.common.apiexception.DataException
 import com.movie.common.baseresponse.Result
-import com.movie.domain.model.MovieDetailDisplayModel
+import com.movie.domain.model.MovieDetailDomainModel
 import com.movie.domain.reprositorycontract.IMovieRepository
 import com.movie.domain.usecase.MovieDetailsUseCase
 import io.mockk.coEvery
@@ -35,7 +35,7 @@ class MovieDetailUseCaseTest {
             })
 
             val expectedJsonResponse = Result.Success(
-                Gson().fromJson(jsonString, MovieDetailDisplayModel::class.java)
+                Gson().fromJson(jsonString, MovieDetailDomainModel::class.java)
             )
             coEvery { movieRepository.getMovieDetails(movieId) } returns expectedJsonResponse
 

@@ -4,8 +4,10 @@ import com.google.gson.Gson
 import com.movie.common.apiexception.NetworkException
 import com.movie.common.baseresponse.Result
 import com.movie.common.constant.NetworkConstant
-import com.movie.domain.model.MovieListDisplayModel
+import com.movie.domain.model.MovieListDomainModel
 import com.movie.domain.usecase.MovieListUseCase
+import com.movie.presentation.mapper.MovieDisplayMapper
+import com.movie.presentation.model.MovieListDisplayModel
 import com.movie.presentation.viewmodel.MovieListViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -29,12 +31,14 @@ class MovieListViewModelTest {
     private lateinit var movieListViewModel: MovieListViewModel
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var movieListUseCase: MovieListUseCase
+    private lateinit var movieDisplayMapper: MovieDisplayMapper
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
+        movieDisplayMapper = mockk()
         movieListUseCase = mockk()
-        movieListViewModel = MovieListViewModel(movieListUseCase)
+        movieListViewModel = MovieListViewModel(movieListUseCase, movieDisplayMapper)
     }
 
     @After
@@ -58,7 +62,7 @@ class MovieListViewModelTest {
                     Array<MovieListDisplayModel>::class.java
                 ).toList()
             )
-            coEvery { movieListUseCase() } returns expectedData
+            coEvery { movieDisplayMapper.mapToListDisplayModel(movieListUseCase()) } returns expectedData
 
             movieListViewModel.loadMovieList()
 
@@ -74,7 +78,7 @@ class MovieListViewModelTest {
             val expectedData = Result.Error(
                 NetworkException(NetworkConstant.UNKNOWN_ERROR)
             )
-            coEvery { movieListUseCase() } returns expectedData
+            coEvery { movieDisplayMapper.mapToListDisplayModel(movieListUseCase()) } returns expectedData
 
             movieListViewModel.loadMovieList()
 

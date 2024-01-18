@@ -21,14 +21,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.movie.common.baseresponse.Result
-import com.movie.domain.model.MovieDetailDisplayModel
 import com.movie.presentation.R
 import com.movie.presentation.constant.FontSize
+import com.movie.presentation.model.MovieDetailDisplayModel
 import com.movie.presentation.ui.customcomposable.MovieProgressBar
 import com.movie.presentation.ui.customcomposable.MovieText
 import com.movie.presentation.viewmodel.MovieDetailViewModel
@@ -65,9 +64,11 @@ fun MovieDetailScreen(
 
 @Composable
 fun MovieDetailUI(movieDetail: MovieDetailDisplayModel) {
-    ConstraintLayout(modifier = Modifier.fillMaxSize()
-        .background(color = Color.White)
-        ) {
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White)
+    ) {
         val (image, titleLabel, title, releaseDateLabel, releaseDate) = createRefs()
 
         CustomImage(

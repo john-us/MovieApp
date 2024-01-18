@@ -3,7 +3,8 @@ package com.movie.presentation
 import androidx.compose.material.MaterialTheme
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
-import com.movie.domain.model.MovieDetailDisplayModel
+import com.movie.domain.model.MovieDetailDomainModel
+import com.movie.presentation.model.MovieDetailDisplayModel
 import com.movie.presentation.ui.screen.MovieDetailUI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
